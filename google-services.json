@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "290729156986",
+    "project_id": "compressores-pro",
+    "storage_bucket": "compressores-pro.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:290729156986:android:a08bcffe8d946fb7e3b6c3",
+        "android_client_info": {
+          "package_name": "com.example.compressores_pro"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC8NM1VXPQTrrqvdhh8aitcQ1YlQ-4uypQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

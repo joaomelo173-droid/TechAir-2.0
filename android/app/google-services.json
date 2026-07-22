@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "278292883822",
+    "project_id": "techair-2",
+    "storage_bucket": "techair-2.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:278292883822:android:c7309e0204d72d9141397f",
+        "android_client_info": {
+          "package_name": "com.example.techair_2_0"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA5Sh4PXTxvmPrMm2iOavzUrMM2wltty0w"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:278292883822:android:b68e4bd09fffc67141397f",
+        "android_client_info": {
+          "package_name": "com.techair.app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA5Sh4PXTxvmPrMm2iOavzUrMM2wltty0w"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

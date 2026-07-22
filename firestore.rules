@@ -1,0 +1,16 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    function signedIn() {
+      return request.auth != null;
+    }
+
+    match /companies/{companyId}/clients/{clientId} {
+      allow read, create, update, delete: if signedIn();
+    }
+
+    match /companies/{companyId}/compressors/{compressorId} {
+      allow read: if signedIn();
+    }
+  }
+}

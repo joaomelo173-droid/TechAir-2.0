@@ -1,0 +1,14 @@
+1. Copia a pasta lib por cima da pasta lib do projeto TechAir_2_0.
+2. Não apagues o projeto atual.
+3. Executa: flutter run -d windows
+
+Alterações:
+- Campo Responsável no lugar do NIF.
+- Observações no cliente.
+- Pesquisa por responsável.
+- Contador automático de compressores associados.
+- Impede apagar clientes que tenham compressores associados.
+
+O contador lê a coleção:
+companies/extincendios/compressors
+Cada compressor deverá ter o campo clientId.
