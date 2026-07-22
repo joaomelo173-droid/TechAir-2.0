@@ -48,8 +48,7 @@ class _CompressorsPageState extends State<CompressorsPage> {
   List<Compressor> get _filteredCompressors {
     final query = _search.trim().toLowerCase();
 
-    final compressors = [..._controller.compressors]
-      ..sort(
+    final compressors = [..._controller.compressors]..sort(
         (a, b) => a.displayName.toLowerCase().compareTo(
               b.displayName.toLowerCase(),
             ),
@@ -72,41 +71,40 @@ class _CompressorsPageState extends State<CompressorsPage> {
   }
 
   Future<void> _createCompressor() async {
-  final compressor = await showDialog<Compressor>(
-    context: context,
-    barrierDismissible: false,
-    builder: (_) {
-      return NewCompressorDialog(
-        companyId: widget.client.companyId,
-        clientId: widget.client.id,
-        clientName: widget.client.name,
-      );
-    },
-  );
-
-  if (compressor == null || !mounted) {
-    return;
-  }
-
-  final saved = await _controller.save(compressor);
-
-  if (!mounted) {
-    return;
-  }
-
-  ScaffoldMessenger.of(context)
-    ..hideCurrentSnackBar()
-    ..showSnackBar(
-      SnackBar(
-        content: Text(
-          saved
-              ? 'Compressor criado com sucesso.'
-              : _controller.error ??
-                  'Não foi possível criar o compressor.',
-        ),
-      ),
+    final compressor = await showDialog<Compressor>(
+      context: context,
+      barrierDismissible: false,
+      builder: (_) {
+        return NewCompressorDialog(
+          companyId: widget.client.companyId,
+          clientId: widget.client.id,
+          clientName: widget.client.name,
+        );
+      },
     );
-}
+
+    if (compressor == null || !mounted) {
+      return;
+    }
+
+    final saved = await _controller.save(compressor);
+
+    if (!mounted) {
+      return;
+    }
+
+    ScaffoldMessenger.of(context)
+      ..hideCurrentSnackBar()
+      ..showSnackBar(
+        SnackBar(
+          content: Text(
+            saved
+                ? 'Compressor criado com sucesso.'
+                : _controller.error ?? 'Não foi possível criar o compressor.',
+          ),
+        ),
+      );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -139,19 +137,19 @@ class _CompressorsPageState extends State<CompressorsPage> {
               ],
             ),
             actions: [
-  FilledButton.icon(
-    onPressed: _controller.loading ? null : _createCompressor,
-    icon: const Icon(Icons.add_rounded),
-    label: const Text('Novo compressor'),
-  ),
-  const SizedBox(width: 8),
-  IconButton(
-    onPressed: _controller.loading ? null : _controller.load,
-    tooltip: 'Atualizar',
-    icon: const Icon(Icons.refresh_rounded),
-  ),
-  const SizedBox(width: 8),
-],
+              FilledButton.icon(
+                onPressed: _controller.loading ? null : _createCompressor,
+                icon: const Icon(Icons.add_rounded),
+                label: const Text('Novo compressor'),
+              ),
+              const SizedBox(width: 8),
+              IconButton(
+                onPressed: _controller.loading ? null : _controller.load,
+                tooltip: 'Atualizar',
+                icon: const Icon(Icons.refresh_rounded),
+              ),
+              const SizedBox(width: 8),
+            ],
           ),
           body: SafeArea(
             child: Padding(
@@ -202,9 +200,9 @@ class _CompressorsPageState extends State<CompressorsPage> {
 
     if (_controller.compressors.isEmpty) {
       return _EmptyState(
-  onRefresh: _controller.load,
-  onCreate: _createCompressor,
-);
+        onRefresh: _controller.load,
+        onCreate: _createCompressor,
+      );
     }
 
     if (compressors.isEmpty) {
@@ -218,8 +216,7 @@ class _CompressorsPageState extends State<CompressorsPage> {
           if (constraints.maxWidth >= 1100) {
             return GridView.builder(
               physics: const AlwaysScrollableScrollPhysics(),
-              gridDelegate:
-                  const SliverGridDelegateWithFixedCrossAxisCount(
+              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                 crossAxisCount: 2,
                 crossAxisSpacing: 14,
                 mainAxisSpacing: 14,
@@ -430,9 +427,7 @@ class _ClientSummary extends StatelessWidget {
                 ),
                 const SizedBox(width: 7),
                 Text(
-                  compressorCount == 1
-                      ? 'compressor'
-                      : 'compressores',
+                  compressorCount == 1 ? 'compressor' : 'compressores',
                   style: const TextStyle(
                     color: AppColors.textSecondary,
                     fontWeight: FontWeight.w600,
@@ -589,10 +584,12 @@ class _CompressorCard extends StatelessWidget {
                             compressor.displayName,
                             maxLines: 1,
                             overflow: TextOverflow.ellipsis,
-                            style:
-                                Theme.of(context).textTheme.titleMedium?.copyWith(
-                                      fontWeight: FontWeight.w900,
-                                    ),
+                            style: Theme.of(context)
+                                .textTheme
+                                .titleMedium
+                                ?.copyWith(
+                                  fontWeight: FontWeight.w900,
+                                ),
                           ),
                         ),
                         const SizedBox(width: 10),
@@ -751,10 +748,12 @@ class _CompressorDetailsSheet extends StatelessWidget {
                         children: [
                           Text(
                             compressor.displayName,
-                            style:
-                                Theme.of(context).textTheme.headlineSmall?.copyWith(
-                                      fontWeight: FontWeight.w900,
-                                    ),
+                            style: Theme.of(context)
+                                .textTheme
+                                .headlineSmall
+                                ?.copyWith(
+                                  fontWeight: FontWeight.w900,
+                                ),
                           ),
                           const SizedBox(height: 5),
                           Text(
@@ -780,122 +779,121 @@ class _CompressorDetailsSheet extends StatelessWidget {
                 ),
                 const SizedBox(height: 26),
                 _DetailsSection(
-  title: 'Identificação',
-  icon: Icons.badge_outlined,
-  children: [
-    _DetailRow(
-      label: 'Marca',
-      value: compressor.brand,
-    ),
-    _DetailRow(
-      label: 'Modelo',
-      value: compressor.model,
-    ),
-    _DetailRow(
-      label: 'Número de série',
-      value: compressor.serialNumber,
-    ),
-    _DetailRow(
-      label: 'Ano de fabrico',
-      value: compressor.manufactureYear?.toString() ?? '',
-    ),
-    _DetailRow(
-      label: 'Tipo',
-      value: compressor.compressorType,
-    ),
-    _DetailRow(
-      label: 'Material',
-      value: compressor.material,
-    ),
-    _DetailRow(
-      label: 'Localização',
-      value: compressor.location,
-    ),
-    _DetailRow(
-      label: 'Distrito',
-      value: compressor.district,
-    ),
-    _DetailRow(
-      label: 'Detalhes do equipamento',
-      value: compressor.equipmentDetails,
-    ),
-  ],
-),
-
-const SizedBox(height: 18),
-_DetailsSection(
-  title: 'Dados técnicos',
-  icon: Icons.settings_outlined,
-  children: [
-    _DetailRow(
-      label: 'Pressão de trabalho',
-      value: _formatTechnicalValue(
-        compressor.workingPressureBar,
-        'bar',
-      ),
-    ),
-    _DetailRow(
-      label: 'Pressão final',
-      value: _formatTechnicalValue(
-        compressor.finalPressureBar,
-        'bar',
-      ),
-    ),
-    _DetailRow(
-      label: 'Pressão de teste',
-      value: _formatTechnicalValue(
-        compressor.testPressureBar,
-        'bar',
-      ),
-    ),
-    _DetailRow(
-      label: 'Caudal',
-      value: _formatTechnicalValue(
-        compressor.chargingRateLitersMinute,
-        'l/min',
-      ),
-    ),
-    _DetailRow(
-      label: 'Potência do motor',
-      value: _formatTechnicalValue(
-        compressor.motorPowerKw,
-        'kW',
-      ),
-    ),
-    _DetailRow(
-      label: 'Tensão',
-      value: compressor.voltage == null
-          ? ''
-          : '${compressor.voltage} V',
-    ),
-    _DetailRow(
-      label: 'Fases',
-      value: compressor.phases?.toString() ?? '',
-    ),
-    _DetailRow(
-      label: 'Horas de funcionamento',
-      value: compressor.operatingHours == null
-          ? ''
-          : '${compressor.operatingHours} h',
-    ),
-    _DetailRow(
-      label: 'Número de estágios',
-      value: compressor.stageCount?.toString() ?? '',
-    ),
-    _DetailRow(
-      label: 'Tipo de óleo',
-      value: compressor.oilType,
-    ),
-    _DetailRow(
-      label: 'Tipo de filtro',
-      value: compressor.filterType,
-    ),
-    _DetailRow(
-      label: 'Estado do equipamento',
-      value: _equipmentStatusLabel(compressor.status),
-    ),
-  ],
-),
+                  title: 'Identificação',
+                  icon: Icons.badge_outlined,
+                  children: [
+                    _DetailRow(
+                      label: 'Marca',
+                      value: compressor.brand,
+                    ),
+                    _DetailRow(
+                      label: 'Modelo',
+                      value: compressor.model,
+                    ),
+                    _DetailRow(
+                      label: 'Número de série',
+                      value: compressor.serialNumber,
+                    ),
+                    _DetailRow(
+                      label: 'Ano de fabrico',
+                      value: compressor.manufactureYear?.toString() ?? '',
+                    ),
+                    _DetailRow(
+                      label: 'Tipo',
+                      value: compressor.compressorType,
+                    ),
+                    _DetailRow(
+                      label: 'Material',
+                      value: compressor.material,
+                    ),
+                    _DetailRow(
+                      label: 'Localização',
+                      value: compressor.location,
+                    ),
+                    _DetailRow(
+                      label: 'Distrito',
+                      value: compressor.district,
+                    ),
+                    _DetailRow(
+                      label: 'Detalhes do equipamento',
+                      value: compressor.equipmentDetails,
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 18),
+                _DetailsSection(
+                  title: 'Dados técnicos',
+                  icon: Icons.settings_outlined,
+                  children: [
+                    _DetailRow(
+                      label: 'Pressão de trabalho',
+                      value: _formatTechnicalValue(
+                        compressor.workingPressureBar,
+                        'bar',
+                      ),
+                    ),
+                    _DetailRow(
+                      label: 'Pressão final',
+                      value: _formatTechnicalValue(
+                        compressor.finalPressureBar,
+                        'bar',
+                      ),
+                    ),
+                    _DetailRow(
+                      label: 'Pressão de teste',
+                      value: _formatTechnicalValue(
+                        compressor.testPressureBar,
+                        'bar',
+                      ),
+                    ),
+                    _DetailRow(
+                      label: 'Caudal',
+                      value: _formatTechnicalValue(
+                        compressor.chargingRateLitersMinute,
+                        'l/min',
+                      ),
+                    ),
+                    _DetailRow(
+                      label: 'Potência do motor',
+                      value: _formatTechnicalValue(
+                        compressor.motorPowerKw,
+                        'kW',
+                      ),
+                    ),
+                    _DetailRow(
+                      label: 'Tensão',
+                      value: compressor.voltage == null
+                          ? ''
+                          : '${compressor.voltage} V',
+                    ),
+                    _DetailRow(
+                      label: 'Fases',
+                      value: compressor.phases?.toString() ?? '',
+                    ),
+                    _DetailRow(
+                      label: 'Horas de funcionamento',
+                      value: compressor.operatingHours == null
+                          ? ''
+                          : '${compressor.operatingHours} h',
+                    ),
+                    _DetailRow(
+                      label: 'Número de estágios',
+                      value: compressor.stageCount?.toString() ?? '',
+                    ),
+                    _DetailRow(
+                      label: 'Tipo de óleo',
+                      value: compressor.oilType,
+                    ),
+                    _DetailRow(
+                      label: 'Tipo de filtro',
+                      value: compressor.filterType,
+                    ),
+                    _DetailRow(
+                      label: 'Estado do equipamento',
+                      value: _equipmentStatusLabel(compressor.status),
+                    ),
+                  ],
+                ),
                 const SizedBox(height: 18),
                 _DetailsSection(
                   title: 'Manutenção',
@@ -1245,64 +1243,65 @@ class _MaintenanceVisual {
 
 class _EmptyState extends StatelessWidget {
   const _EmptyState({
-  required this.onRefresh,
-  required this.onCreate,
-});
+    required this.onRefresh,
+    required this.onCreate,
+  });
 
-final VoidCallback onRefresh;
-final VoidCallback onCreate;
+  final VoidCallback onRefresh;
+  final VoidCallback onCreate;
 
   @override
-Widget build(BuildContext context) {
-  return Center(
-    child: SingleChildScrollView(
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          const Icon(
-            Icons.precision_manufacturing_outlined,
-            size: 58,
-            color: AppColors.textSecondary,
-          ),
-          const SizedBox(height: 14),
-          Text(
-            'Nenhum compressor associado',
-            style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                  fontWeight: FontWeight.w800,
-                ),
-          ),
-          const SizedBox(height: 7),
-          const Text(
-            'Este cliente ainda não tem compressores registados.',
-            textAlign: TextAlign.center,
-            style: TextStyle(
+  Widget build(BuildContext context) {
+    return Center(
+      child: SingleChildScrollView(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            const Icon(
+              Icons.precision_manufacturing_outlined,
+              size: 58,
               color: AppColors.textSecondary,
             ),
-          ),
-          const SizedBox(height: 20),
-          Wrap(
-            spacing: 12,
-            runSpacing: 12,
-            alignment: WrapAlignment.center,
-            children: [
-              FilledButton.icon(
-                onPressed: onCreate,
-                icon: const Icon(Icons.add_rounded),
-                label: const Text('Novo compressor'),
+            const SizedBox(height: 14),
+            Text(
+              'Nenhum compressor associado',
+              style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                    fontWeight: FontWeight.w800,
+                  ),
+            ),
+            const SizedBox(height: 7),
+            const Text(
+              'Este cliente ainda não tem compressores registados.',
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                color: AppColors.textSecondary,
               ),
-              OutlinedButton.icon(
-                onPressed: onRefresh,
-                icon: const Icon(Icons.refresh_rounded),
-                label: const Text('Atualizar'),
-              ),
-            ],
-          ),
-        ],
+            ),
+            const SizedBox(height: 20),
+            Wrap(
+              spacing: 12,
+              runSpacing: 12,
+              alignment: WrapAlignment.center,
+              children: [
+                FilledButton.icon(
+                  onPressed: onCreate,
+                  icon: const Icon(Icons.add_rounded),
+                  label: const Text('Novo compressor'),
+                ),
+                OutlinedButton.icon(
+                  onPressed: onRefresh,
+                  icon: const Icon(Icons.refresh_rounded),
+                  label: const Text('Atualizar'),
+                ),
+              ],
+            ),
+          ],
+        ),
       ),
-    ),
-  );
+    );
+  }
 }
-}
+
 class _NoSearchResults extends StatelessWidget {
   const _NoSearchResults();
 

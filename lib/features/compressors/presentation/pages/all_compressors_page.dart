@@ -39,8 +39,7 @@ class _AllCompressorsPageState extends State<AllCompressorsPage> {
   List<Compressor> get _filteredCompressors {
     final query = _search.trim().toLowerCase();
 
-    final compressors = [..._controller.compressors]
-      ..sort(
+    final compressors = [..._controller.compressors]..sort(
         (a, b) => a.displayName.toLowerCase().compareTo(
               b.displayName.toLowerCase(),
             ),
@@ -287,56 +286,54 @@ class _AllCompressorsPageState extends State<AllCompressorsPage> {
                       ),
                     ],
                   ),
-
-                const SizedBox(height: 16),
-
-_DetailsSection(
-  title: 'Modernização',
-  children: [
-    _DetailRow(
-      label: 'Última modernização',
-      value: _formatDate(compressor.lastModernizationDate),
-    ),
-    _DetailRow(
-      label: 'Próxima modernização',
-      value: _formatDate(compressor.nextModernizationDate),
-    ),
-    _DetailRow(
-      label: 'Estado',
-      value: compressor.modernizationStatus,
-    ),
-    _DetailRow(
-      label: 'Orçamento enviado',
-      value: compressor.quoteSent ? 'Sim' : 'Não',
-    ),
-  ],
-),
                   const SizedBox(height: 16),
                   _DetailsSection(
-  title: 'Localização e contacto',
-  children: [
-    _DetailRow(
-      label: 'Cliente / Corporação',
-      value: compressor.clientName,
-    ),
-    _DetailRow(
-      label: 'Distrito',
-      value: compressor.district,
-    ),
-    _DetailRow(
-      label: 'Localização',
-      value: compressor.location,
-    ),
-    _DetailRow(
-      label: 'Responsável',
-      value: compressor.responsible,
-    ),
-    _DetailRow(
-      label: 'Email',
-      value: compressor.responsibleEmail,
-    ),
-  ],
-),
+                    title: 'Modernização',
+                    children: [
+                      _DetailRow(
+                        label: 'Última modernização',
+                        value: _formatDate(compressor.lastModernizationDate),
+                      ),
+                      _DetailRow(
+                        label: 'Próxima modernização',
+                        value: _formatDate(compressor.nextModernizationDate),
+                      ),
+                      _DetailRow(
+                        label: 'Estado',
+                        value: compressor.modernizationStatus,
+                      ),
+                      _DetailRow(
+                        label: 'Orçamento enviado',
+                        value: compressor.quoteSent ? 'Sim' : 'Não',
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 16),
+                  _DetailsSection(
+                    title: 'Localização e contacto',
+                    children: [
+                      _DetailRow(
+                        label: 'Cliente / Corporação',
+                        value: compressor.clientName,
+                      ),
+                      _DetailRow(
+                        label: 'Distrito',
+                        value: compressor.district,
+                      ),
+                      _DetailRow(
+                        label: 'Localização',
+                        value: compressor.location,
+                      ),
+                      _DetailRow(
+                        label: 'Responsável',
+                        value: compressor.responsible,
+                      ),
+                      _DetailRow(
+                        label: 'Email',
+                        value: compressor.responsibleEmail,
+                      ),
+                    ],
+                  ),
                   if (compressor.notes.isNotEmpty ||
                       compressor.equipmentDetails.isNotEmpty) ...[
                     const SizedBox(height: 16),
@@ -563,11 +560,11 @@ class _CompressorCard extends StatelessWidget {
                             icon: Icons.person_outline_rounded,
                             value: compressor.responsible,
                           ),
-                          if (compressor.clientName.isNotEmpty)
-  _InlineDetail(
-    icon: Icons.business_rounded,
-    value: compressor.clientName,
-  ),
+                        if (compressor.clientName.isNotEmpty)
+                          _InlineDetail(
+                            icon: Icons.business_rounded,
+                            value: compressor.clientName,
+                          ),
                       ],
                     ),
                   ],
@@ -628,9 +625,8 @@ class _DetailsSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final visibleChildren = children
-        .where((child) => child.value.trim().isNotEmpty)
-        .toList();
+    final visibleChildren =
+        children.where((child) => child.value.trim().isNotEmpty).toList();
 
     if (visibleChildren.isEmpty) {
       return const SizedBox.shrink();
@@ -667,8 +663,6 @@ class _DetailRow extends StatelessWidget {
 
   final String label;
   final String value;
-
-  
 
   @override
   Widget build(BuildContext context) {

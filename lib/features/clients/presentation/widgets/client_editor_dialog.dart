@@ -79,7 +79,8 @@ class _ClientEditorDialogState extends State<ClientEditorDialog> {
                         color: AppColors.orange.withValues(alpha: .14),
                         borderRadius: BorderRadius.circular(12),
                       ),
-                      child: const Icon(Icons.apartment_rounded, color: AppColors.orange),
+                      child: const Icon(Icons.apartment_rounded,
+                          color: AppColors.orange),
                     ),
                     const SizedBox(width: 14),
                     Expanded(
@@ -88,7 +89,10 @@ class _ClientEditorDialogState extends State<ClientEditorDialog> {
                         children: [
                           Text(
                             editing ? 'Editar cliente' : 'Novo cliente',
-                            style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                            style: Theme.of(context)
+                                .textTheme
+                                .titleLarge
+                                ?.copyWith(
                                   fontWeight: FontWeight.w800,
                                 ),
                           ),
@@ -119,7 +123,8 @@ class _ClientEditorDialogState extends State<ClientEditorDialog> {
                   ],
                 ),
                 const SizedBox(height: 14),
-                _field(_email, 'Email', keyboardType: TextInputType.emailAddress),
+                _field(_email, 'Email',
+                    keyboardType: TextInputType.emailAddress),
                 const SizedBox(height: 14),
                 _field(_address, 'Morada'),
                 const SizedBox(height: 14),
@@ -149,7 +154,8 @@ class _ClientEditorDialogState extends State<ClientEditorDialog> {
                     FilledButton.icon(
                       onPressed: _submit,
                       icon: const Icon(Icons.save_rounded),
-                      label: Text(editing ? 'Guardar alterações' : 'Criar cliente'),
+                      label: Text(
+                          editing ? 'Guardar alterações' : 'Criar cliente'),
                     ),
                   ],
                 ),
@@ -172,7 +178,8 @@ class _ClientEditorDialogState extends State<ClientEditorDialog> {
       keyboardType: keyboardType,
       decoration: InputDecoration(labelText: label),
       validator: required
-          ? (value) => value == null || value.trim().isEmpty ? 'Campo obrigatório' : null
+          ? (value) =>
+              value == null || value.trim().isEmpty ? 'Campo obrigatório' : null
           : null,
     );
   }

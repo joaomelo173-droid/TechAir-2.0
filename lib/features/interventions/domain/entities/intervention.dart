@@ -98,23 +98,17 @@ class Intervention {
     };
   }
 
-  bool get isPlanned =>
-      status == InterventionStatus.planned;
+  bool get isPlanned => status == InterventionStatus.planned;
 
-  bool get isInProgress =>
-      status == InterventionStatus.inProgress;
+  bool get isInProgress => status == InterventionStatus.inProgress;
 
-  bool get isCompleted =>
-      status == InterventionStatus.completed;
+  bool get isCompleted => status == InterventionStatus.completed;
 
-  bool get isCancelled =>
-      status == InterventionStatus.cancelled;
+  bool get isCancelled => status == InterventionStatus.cancelled;
 
-  bool get isClosed =>
-      isCompleted || isCancelled;
+  bool get isClosed => isCompleted || isCancelled;
 
-  bool get needsCustomerSignature =>
-      status == InterventionStatus.inProgress;
+  bool get needsCustomerSignature => status == InterventionStatus.inProgress;
 
   Intervention copyWith({
     String? id,
@@ -147,32 +141,27 @@ class Intervention {
       clientId: clientId ?? this.clientId,
       compressorId: compressorId ?? this.compressorId,
       clientName: clientName ?? this.clientName,
-      compressorName:
-          compressorName ?? this.compressorName,
+      compressorName: compressorName ?? this.compressorName,
       type: type ?? this.type,
       status: status ?? this.status,
       title: title ?? this.title,
       description: description ?? this.description,
-      technicianName:
-          technicianName ?? this.technicianName,
+      technicianName: technicianName ?? this.technicianName,
       startedAt: startedAt ?? this.startedAt,
       completedAt: identical(completedAt, _unset)
           ? this.completedAt
           : completedAt as DateTime?,
-      nextInterventionDate:
-          identical(nextInterventionDate, _unset)
-              ? this.nextInterventionDate
-              : nextInterventionDate as DateTime?,
-      durationMinutes:
-          durationMinutes ?? this.durationMinutes,
+      nextInterventionDate: identical(nextInterventionDate, _unset)
+          ? this.nextInterventionDate
+          : nextInterventionDate as DateTime?,
+      durationMinutes: durationMinutes ?? this.durationMinutes,
       operatingHours: identical(operatingHours, _unset)
           ? this.operatingHours
           : operatingHours as int?,
       partsUsed: partsUsed ?? this.partsUsed,
       checklist: checklist ?? this.checklist,
       photoUrls: photoUrls ?? this.photoUrls,
-      documentUrls:
-          documentUrls ?? this.documentUrls,
+      documentUrls: documentUrls ?? this.documentUrls,
       pdfUrl: pdfUrl ?? this.pdfUrl,
       createdAt: createdAt ?? this.createdAt,
       updatedAt: updatedAt ?? this.updatedAt,

@@ -26,8 +26,7 @@ class CompressorFirestoreMapper {
       workingPressureBar: _decimal(data['workingPressureBar']),
       testPressureBar: _decimal(data['testPressureBar']),
       finalPressureBar: _decimal(data['finalPressureBar']),
-      chargingRateLitersMinute:
-          _decimal(data['chargingRateLitersMinute']),
+      chargingRateLitersMinute: _decimal(data['chargingRateLitersMinute']),
       motorPowerKw: _decimal(data['motorPowerKw']),
       voltage: _integer(data['voltage']),
       phases: _integer(data['phases']),
@@ -75,8 +74,7 @@ class CompressorFirestoreMapper {
       'workingPressureBar': compressor.workingPressureBar,
       'testPressureBar': compressor.testPressureBar,
       'finalPressureBar': compressor.finalPressureBar,
-      'chargingRateLitersMinute':
-          compressor.chargingRateLitersMinute,
+      'chargingRateLitersMinute': compressor.chargingRateLitersMinute,
       'motorPowerKw': compressor.motorPowerKw,
       'voltage': compressor.voltage,
       'phases': compressor.phases,
@@ -92,15 +90,11 @@ class CompressorFirestoreMapper {
       'responsibleEmail': compressor.responsibleEmail,
       'equipmentDetails': compressor.equipmentDetails,
       'district': compressor.district,
-      'lastMaintenanceDate':
-          _timestamp(compressor.lastMaintenanceDate),
-      'nextMaintenanceDate':
-          _timestamp(compressor.nextMaintenanceDate),
+      'lastMaintenanceDate': _timestamp(compressor.lastMaintenanceDate),
+      'nextMaintenanceDate': _timestamp(compressor.nextMaintenanceDate),
       'maintenanceStatus': compressor.maintenanceStatus,
-      'lastModernizationDate':
-          _timestamp(compressor.lastModernizationDate),
-      'nextModernizationDate':
-          _timestamp(compressor.nextModernizationDate),
+      'lastModernizationDate': _timestamp(compressor.lastModernizationDate),
+      'nextModernizationDate': _timestamp(compressor.nextModernizationDate),
       'modernizationStatus': compressor.modernizationStatus,
       'quoteSent': compressor.quoteSent,
       'alert': compressor.alert,

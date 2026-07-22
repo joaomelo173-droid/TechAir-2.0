@@ -16,12 +16,10 @@ class ReceptionPhotosField extends StatefulWidget {
   final bool enabled;
 
   @override
-  State<ReceptionPhotosField> createState() =>
-      _ReceptionPhotosFieldState();
+  State<ReceptionPhotosField> createState() => _ReceptionPhotosFieldState();
 }
 
-class _ReceptionPhotosFieldState
-    extends State<ReceptionPhotosField> {
+class _ReceptionPhotosFieldState extends State<ReceptionPhotosField> {
   final ImagePicker _imagePicker = ImagePicker();
 
   late final List<XFile> _photos;
@@ -282,8 +280,7 @@ class _AddPhotoButton extends StatelessWidget {
       width: 120,
       height: 120,
       child: OutlinedButton(
-        onPressed:
-            enabled && !loading ? onPressed : null,
+        onPressed: enabled && !loading ? onPressed : null,
         style: OutlinedButton.styleFrom(
           padding: const EdgeInsets.all(10),
           shape: RoundedRectangleBorder(
@@ -293,8 +290,7 @@ class _AddPhotoButton extends StatelessWidget {
         child: loading
             ? const CircularProgressIndicator()
             : const Column(
-                mainAxisAlignment:
-                    MainAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Icon(
                     Icons.add_a_photo_outlined,

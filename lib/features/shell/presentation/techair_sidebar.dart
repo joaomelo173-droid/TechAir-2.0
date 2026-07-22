@@ -49,9 +49,8 @@ class TechAirSidebar extends StatelessWidget {
                 itemBuilder: (context, index) {
                   final item = navigationItems[index];
 
-                  final previousGroup = index == 0
-                      ? null
-                      : navigationItems[index - 1].group;
+                  final previousGroup =
+                      index == 0 ? null : navigationItems[index - 1].group;
 
                   final showGroup =
                       item.group != null && item.group != previousGroup;
@@ -244,10 +243,8 @@ class _SidebarTile extends StatelessWidget {
             : Text(
                 item.label,
                 style: TextStyle(
-                  color:
-                      selected ? Colors.white : AppColors.textPrimary,
-                  fontWeight:
-                      selected ? FontWeight.w800 : FontWeight.w500,
+                  color: selected ? Colors.white : AppColors.textPrimary,
+                  fontWeight: selected ? FontWeight.w800 : FontWeight.w500,
                 ),
               ),
       ),
@@ -277,16 +274,15 @@ class _NavigationIcon extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final color =
-        selected ? Colors.white : AppColors.textSecondary;
+    final color = selected ? Colors.white : AppColors.textSecondary;
 
-if (section == AppSection.compressors) {
-  return TechAirIcon(
-    type: TechAirIconType.compressor,
-    size: 24,
-    color: color,
-  );
-}
+    if (section == AppSection.compressors) {
+      return TechAirIcon(
+        type: TechAirIconType.compressor,
+        size: 24,
+        color: color,
+      );
+    }
 
     return Icon(
       fallbackIcon,
@@ -370,10 +366,8 @@ class _ProfileCard extends StatelessWidget {
   }
 
   String _initials(String value) {
-    final parts = value
-        .split(RegExp(r'\s+'))
-        .where((part) => part.isNotEmpty)
-        .toList();
+    final parts =
+        value.split(RegExp(r'\s+')).where((part) => part.isNotEmpty).toList();
 
     if (parts.isEmpty) return 'U';
 

@@ -147,7 +147,8 @@ class _LoginPageState extends State<LoginPage> {
                             onFieldSubmitted: (_) => _signIn(),
                             decoration: InputDecoration(
                               labelText: 'Palavra-passe',
-                              prefixIcon: const Icon(Icons.lock_outline_rounded),
+                              prefixIcon:
+                                  const Icon(Icons.lock_outline_rounded),
                               suffixIcon: IconButton(
                                 tooltip: _obscurePassword
                                     ? 'Mostrar palavra-passe'
@@ -182,7 +183,8 @@ class _LoginPageState extends State<LoginPage> {
                               decoration: BoxDecoration(
                                 color: const Color(0xFF431D24),
                                 borderRadius: BorderRadius.circular(12),
-                                border: Border.all(color: const Color(0xFF8C3443)),
+                                border:
+                                    Border.all(color: const Color(0xFF8C3443)),
                               ),
                               child: Row(
                                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -204,7 +206,8 @@ class _LoginPageState extends State<LoginPage> {
                             icon: _submitting
                                 ? const SizedBox.square(
                                     dimension: 18,
-                                    child: CircularProgressIndicator(strokeWidth: 2),
+                                    child: CircularProgressIndicator(
+                                        strokeWidth: 2),
                                   )
                                 : const Icon(Icons.arrow_forward_rounded),
                             label: Text(_submitting ? 'A entrar...' : 'Entrar'),

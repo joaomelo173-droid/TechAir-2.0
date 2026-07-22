@@ -41,13 +41,17 @@ class _AppShellState extends State<AppShell> {
     return LayoutBuilder(
       builder: (context, constraints) {
         final mobile = constraints.maxWidth < 760;
-        final compact = constraints.maxWidth >= 760 && constraints.maxWidth < 1060;
+        final compact =
+            constraints.maxWidth >= 760 && constraints.maxWidth < 1060;
 
         return Scaffold(
           drawer: mobile
               ? Drawer(
                   width: 294,
-                  child: TechAirSidebar(selected: _selected, onSelected: _select, user: widget.user),
+                  child: TechAirSidebar(
+                      selected: _selected,
+                      onSelected: _select,
+                      user: widget.user),
                 )
               : null,
           appBar: mobile
@@ -73,7 +77,8 @@ class _AppShellState extends State<AppShell> {
                         authService: widget.authService,
                         user: widget.user,
                       ),
-                    Expanded(child: AnimatedSwitcher(
+                    Expanded(
+                        child: AnimatedSwitcher(
                       duration: const Duration(milliseconds: 220),
                       child: KeyedSubtree(
                         key: ValueKey(_selected),
@@ -102,12 +107,15 @@ class _AppShellState extends State<AppShell> {
                       icon: Icon(Icons.grid_view_rounded),
                       label: 'Dashboard',
                     ),
-                    NavigationDestination(icon: Icon(Icons.groups_rounded), label: 'Clientes'),
+                    NavigationDestination(
+                        icon: Icon(Icons.groups_rounded), label: 'Clientes'),
                     NavigationDestination(
                       icon: Icon(Icons.precision_manufacturing_rounded),
                       label: 'Compressores',
                     ),
-                    NavigationDestination(icon: Icon(Icons.handyman_rounded), label: 'Manutenções'),
+                    NavigationDestination(
+                        icon: Icon(Icons.handyman_rounded),
+                        label: 'Manutenções'),
                   ],
                 )
               : null,
@@ -126,62 +134,44 @@ class _AppShellState extends State<AppShell> {
   }
 
   Widget _pageFor(AppSection section) {
-  return switch (section) {
-    AppSection.dashboard => const DashboardPage(),
-
-    AppSection.reception => const ReceptionsPage(),
-
-    AppSection.clients => const ClientsPage(),
-
-    AppSection.compressors =>
-      const AllCompressorsPage(),
-
-    AppSection.interventions =>
-      const InterventionsPage(),
-
-    AppSection.maintenance =>
-      const FeaturePlaceholder(
-        title: 'Manutenções',
-        description: 'Gestão de manutenções.',
-        icon: Icons.handyman_rounded,
-      ),
-
-    AppSection.modernizations =>
-      const FeaturePlaceholder(
-        title: 'Modernizações',
-        description:
-            'Planeamento, trabalhos realizados, próxima intervenção e relatório PDF.',
-        icon: Icons.settings_suggest_rounded,
-      ),
-
-    AppSection.breakdowns =>
-      const FeaturePlaceholder(
-        title: 'Avarias',
-        description:
-            'Prioridade, diagnóstico, trabalhos realizados e acompanhamento do estado.',
-        icon: Icons.warning_amber_rounded,
-      ),
-
-    AppSection.works => const WorkshopPage(),
-        
-
-    AppSection.reports =>
-      const FeaturePlaceholder(
-        title: 'Relatórios',
-        description:
-            'Arquivo central dos PDFs emitidos, pesquisa, impressão e partilha.',
-        icon: Icons.analytics_rounded,
-      ),
-
-    AppSection.settings =>
-      const FeaturePlaceholder(
-        title: 'Configurações',
-        description:
-            'Empresa, utilizadores, permissões, numeração, sincronização e identidade visual.',
-        icon: Icons.settings_rounded,
-      ),
-  };
-}
+    return switch (section) {
+      AppSection.dashboard => const DashboardPage(),
+      AppSection.reception => const ReceptionsPage(),
+      AppSection.clients => const ClientsPage(),
+      AppSection.compressors => const AllCompressorsPage(),
+      AppSection.interventions => const InterventionsPage(),
+      AppSection.maintenance => const FeaturePlaceholder(
+          title: 'Manutenções',
+          description: 'Gestão de manutenções.',
+          icon: Icons.handyman_rounded,
+        ),
+      AppSection.modernizations => const FeaturePlaceholder(
+          title: 'Modernizações',
+          description:
+              'Planeamento, trabalhos realizados, próxima intervenção e relatório PDF.',
+          icon: Icons.settings_suggest_rounded,
+        ),
+      AppSection.breakdowns => const FeaturePlaceholder(
+          title: 'Avarias',
+          description:
+              'Prioridade, diagnóstico, trabalhos realizados e acompanhamento do estado.',
+          icon: Icons.warning_amber_rounded,
+        ),
+      AppSection.works => const WorkshopPage(),
+      AppSection.reports => const FeaturePlaceholder(
+          title: 'Relatórios',
+          description:
+              'Arquivo central dos PDFs emitidos, pesquisa, impressão e partilha.',
+          icon: Icons.analytics_rounded,
+        ),
+      AppSection.settings => const FeaturePlaceholder(
+          title: 'Configurações',
+          description:
+              'Empresa, utilizadores, permissões, numeração, sincronização e identidade visual.',
+          icon: Icons.settings_rounded,
+        ),
+    };
+  }
 }
 
 class _DesktopTopBar extends StatelessWidget {
@@ -215,7 +205,8 @@ class _DesktopTopBar extends StatelessWidget {
             ),
           ),
           const Spacer(),
-          const Icon(Icons.business_rounded, color: AppColors.textSecondary, size: 20),
+          const Icon(Icons.business_rounded,
+              color: AppColors.textSecondary, size: 20),
           const SizedBox(width: 8),
           const Text('Extincêndios — Equipamentos de Proteção'),
           const SizedBox(width: 18),
@@ -260,7 +251,10 @@ class _DesktopTopBar extends StatelessWidget {
     final source = (user.displayName?.trim().isNotEmpty ?? false)
         ? user.displayName!.trim()
         : (user.email ?? 'U');
-    final parts = source.split(RegExp(r'\s+|@')).where((part) => part.isNotEmpty).toList();
+    final parts = source
+        .split(RegExp(r'\s+|@'))
+        .where((part) => part.isNotEmpty)
+        .toList();
     if (parts.length == 1) return parts.first.substring(0, 1).toUpperCase();
     return '${parts.first[0]}${parts[1][0]}'.toUpperCase();
   }

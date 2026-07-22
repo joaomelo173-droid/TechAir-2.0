@@ -39,8 +39,7 @@ class ReceptionCatalogController extends ChangeNotifier {
   final List<ReceptionClientItem> _clients = [];
   final List<ReceptionCompressorItem> _compressors = [];
 
-  List<ReceptionClientItem> get clients =>
-      List.unmodifiable(_clients);
+  List<ReceptionClientItem> get clients => List.unmodifiable(_clients);
 
   List<ReceptionCompressorItem> get compressors =>
       List.unmodifiable(_compressors);
@@ -99,9 +98,7 @@ class ReceptionCatalogController extends ChangeNotifier {
 
         return ReceptionClientItem(
           id: document.id,
-          name: name.isEmpty
-              ? 'Cliente sem nome'
-              : name,
+          name: name.isEmpty ? 'Cliente sem nome' : name,
           subtitle: subtitleParts.join(' • '),
         );
       }).toList();
@@ -116,11 +113,9 @@ class ReceptionCatalogController extends ChangeNotifier {
         ..clear()
         ..addAll(loadedClients);
     } on FirebaseException catch (exception) {
-      error = exception.message ??
-          'Não foi possível carregar os clientes.';
+      error = exception.message ?? 'Não foi possível carregar os clientes.';
     } catch (exception) {
-      error =
-          'Não foi possível carregar os clientes: $exception';
+      error = 'Não foi possível carregar os clientes: $exception';
     } finally {
       loadingClients = false;
       notifyListeners();
@@ -150,8 +145,7 @@ class ReceptionCatalogController extends ChangeNotifier {
           .collection('compressores')
           .get();
 
-      final loadedCompressors =
-          snapshot.docs.map((document) {
+      final loadedCompressors = snapshot.docs.map((document) {
         final data = document.data();
 
         final brand = _firstNonEmpty([
@@ -195,10 +189,8 @@ class ReceptionCatalogController extends ChangeNotifier {
                 : 'Compressor sem identificação';
 
         final subtitleParts = <String>[
-          if (serialNumber.isNotEmpty)
-            'N.º série: $serialNumber',
-          if (material.isNotEmpty)
-            'Material: $material',
+          if (serialNumber.isNotEmpty) 'N.º série: $serialNumber',
+          if (material.isNotEmpty) 'Material: $material',
         ];
 
         return ReceptionCompressorItem(
@@ -219,11 +211,9 @@ class ReceptionCatalogController extends ChangeNotifier {
         ..clear()
         ..addAll(loadedCompressors);
     } on FirebaseException catch (exception) {
-      error = exception.message ??
-          'Não foi possível carregar os compressores.';
+      error = exception.message ?? 'Não foi possível carregar os compressores.';
     } catch (exception) {
-      error =
-          'Não foi possível carregar os compressores: $exception';
+      error = 'Não foi possível carregar os compressores: $exception';
     } finally {
       loadingCompressors = false;
       notifyListeners();
@@ -231,8 +221,7 @@ class ReceptionCatalogController extends ChangeNotifier {
   }
 
   void clearCompressors() {
-    if (_compressors.isEmpty &&
-        !loadingCompressors) {
+    if (_compressors.isEmpty && !loadingCompressors) {
       return;
     }
 

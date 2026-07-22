@@ -44,10 +44,7 @@ class ClientExcelImportRow {
   final DateTime? lastAlertDate;
 
   String get normalizedClientName {
-    return clientName
-        .trim()
-        .replaceAll(RegExp(r'\s+'), ' ')
-        .toLowerCase();
+    return clientName.trim().replaceAll(RegExp(r'\s+'), ' ').toLowerCase();
   }
 }
 

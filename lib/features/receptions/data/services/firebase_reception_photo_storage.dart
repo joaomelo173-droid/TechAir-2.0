@@ -4,8 +4,7 @@ import 'package:firebase_storage/firebase_storage.dart';
 
 import '../../domain/services/reception_photo_storage.dart';
 
-class FirebaseReceptionPhotoStorage
-    implements ReceptionPhotoStorage {
+class FirebaseReceptionPhotoStorage implements ReceptionPhotoStorage {
   FirebaseReceptionPhotoStorage({
     FirebaseStorage? storage,
   }) : _storage = storage ?? FirebaseStorage.instance;

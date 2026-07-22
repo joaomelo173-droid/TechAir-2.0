@@ -11,7 +11,11 @@ class DashboardPage extends StatelessWidget {
     return LayoutBuilder(
       builder: (context, constraints) {
         final width = constraints.maxWidth;
-        final columns = width >= 1240 ? 5 : width >= 780 ? 3 : 2;
+        final columns = width >= 1240
+            ? 5
+            : width >= 780
+                ? 3
+                : 2;
 
         return SingleChildScrollView(
           padding: EdgeInsets.all(width < 700 ? 16 : 26),
@@ -138,7 +142,8 @@ class _Header extends StatelessWidget {
               style: FilledButton.styleFrom(
                 backgroundColor: AppColors.orange,
                 foregroundColor: Colors.white,
-                padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 16),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 18, vertical: 16),
               ),
             ),
         ],
@@ -201,23 +206,28 @@ class _OpenBreakdowns extends StatelessWidget {
                       color: AppColors.red.withOpacity(.12),
                       borderRadius: BorderRadius.circular(12),
                     ),
-                    child: const Icon(Icons.warning_amber_rounded, color: AppColors.red, size: 20),
+                    child: const Icon(Icons.warning_amber_rounded,
+                        color: AppColors.red, size: 20),
                   ),
                   const SizedBox(width: 12),
                   Expanded(
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(row.$1, style: const TextStyle(fontWeight: FontWeight.w800)),
+                        Text(row.$1,
+                            style:
+                                const TextStyle(fontWeight: FontWeight.w800)),
                         Text(
                           '${row.$2} · ${row.$3}',
                           overflow: TextOverflow.ellipsis,
-                          style: const TextStyle(color: AppColors.textSecondary, fontSize: 12),
+                          style: const TextStyle(
+                              color: AppColors.textSecondary, fontSize: 12),
                         ),
                       ],
                     ),
                   ),
-                  const Icon(Icons.chevron_right_rounded, color: AppColors.textSecondary),
+                  const Icon(Icons.chevron_right_rounded,
+                      color: AppColors.textSecondary),
                 ],
               ),
             ),
@@ -229,7 +239,8 @@ class _OpenBreakdowns extends StatelessWidget {
 }
 
 class _Panel extends StatelessWidget {
-  const _Panel({required this.title, required this.subtitle, required this.child});
+  const _Panel(
+      {required this.title, required this.subtitle, required this.child});
 
   final String title;
   final String subtitle;
@@ -254,9 +265,13 @@ class _Panel extends StatelessWidget {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(title, style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w900)),
+                      Text(title,
+                          style: const TextStyle(
+                              fontSize: 16, fontWeight: FontWeight.w900)),
                       const SizedBox(height: 3),
-                      Text(subtitle, style: const TextStyle(color: AppColors.textSecondary, fontSize: 12)),
+                      Text(subtitle,
+                          style: const TextStyle(
+                              color: AppColors.textSecondary, fontSize: 12)),
                     ],
                   ),
                 ),
@@ -299,18 +314,21 @@ class _ActivityRow extends StatelessWidget {
               color: AppColors.blue.withOpacity(.12),
               borderRadius: BorderRadius.circular(12),
             ),
-            child: const Icon(Icons.handyman_rounded, color: AppColors.blue, size: 20),
+            child: const Icon(Icons.handyman_rounded,
+                color: AppColors.blue, size: 20),
           ),
           const SizedBox(width: 12),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(number, style: const TextStyle(fontWeight: FontWeight.w800)),
+                Text(number,
+                    style: const TextStyle(fontWeight: FontWeight.w800)),
                 Text(
                   '$equipment · $client',
                   overflow: TextOverflow.ellipsis,
-                  style: const TextStyle(color: AppColors.textSecondary, fontSize: 12),
+                  style: const TextStyle(
+                      color: AppColors.textSecondary, fontSize: 12),
                 ),
               ],
             ),
@@ -318,7 +336,8 @@ class _ActivityRow extends StatelessWidget {
           Container(
             padding: const EdgeInsets.symmetric(horizontal: 9, vertical: 5),
             decoration: BoxDecoration(
-              color: (complete ? AppColors.green : AppColors.orange).withOpacity(.14),
+              color: (complete ? AppColors.green : AppColors.orange)
+                  .withOpacity(.14),
               borderRadius: BorderRadius.circular(20),
             ),
             child: Text(

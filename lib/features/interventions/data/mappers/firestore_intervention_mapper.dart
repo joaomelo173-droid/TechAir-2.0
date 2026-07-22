@@ -14,60 +14,29 @@ class FirestoreInterventionMapper {
       clientId: (data['clientId'] ?? '').toString(),
       compressorId: (data['compressorId'] ?? '').toString(),
       clientName: (data['clientName'] ?? '').toString(),
-      compressorName:
-          (data['compressorName'] ?? '').toString(),
-
+      compressorName: (data['compressorName'] ?? '').toString(),
       type: InterventionType.values.firstWhere(
         (value) => value.name == data['type'],
         orElse: () => InterventionType.maintenance,
       ),
-
       status: _statusFromFirestore(data['status']),
-
       title: (data['title'] ?? '').toString(),
       description: (data['description'] ?? '').toString(),
-      technicianName:
-          (data['technicianName'] ?? '').toString(),
-
-      startedAt:
-          _dateTimeFromFirestore(data['startedAt']) ??
-              DateTime.now(),
-
-      completedAt:
-          _dateTimeFromFirestore(data['completedAt']),
-
-      nextInterventionDate:
-          _dateTimeFromFirestore(
-            data['nextInterventionDate'],
-          ),
-
-      durationMinutes:
-          _intFromFirestore(data['durationMinutes']) ?? 0,
-
-      operatingHours:
-          _intFromFirestore(data['operatingHours']),
-
-      partsUsed:
-          _stringListFromFirestore(data['partsUsed']),
-
-      checklist:
-          _boolMapFromFirestore(data['checklist']),
-
-      photoUrls:
-          _stringListFromFirestore(data['photoUrls']),
-
-      documentUrls:
-          _stringListFromFirestore(data['documentUrls']),
-
+      technicianName: (data['technicianName'] ?? '').toString(),
+      startedAt: _dateTimeFromFirestore(data['startedAt']) ?? DateTime.now(),
+      completedAt: _dateTimeFromFirestore(data['completedAt']),
+      nextInterventionDate: _dateTimeFromFirestore(
+        data['nextInterventionDate'],
+      ),
+      durationMinutes: _intFromFirestore(data['durationMinutes']) ?? 0,
+      operatingHours: _intFromFirestore(data['operatingHours']),
+      partsUsed: _stringListFromFirestore(data['partsUsed']),
+      checklist: _boolMapFromFirestore(data['checklist']),
+      photoUrls: _stringListFromFirestore(data['photoUrls']),
+      documentUrls: _stringListFromFirestore(data['documentUrls']),
       pdfUrl: (data['pdfUrl'] ?? '').toString(),
-
-      createdAt:
-          _dateTimeFromFirestore(data['createdAt']) ??
-              DateTime.now(),
-
-      updatedAt:
-          _dateTimeFromFirestore(data['updatedAt']) ??
-              DateTime.now(),
+      createdAt: _dateTimeFromFirestore(data['createdAt']) ?? DateTime.now(),
+      updatedAt: _dateTimeFromFirestore(data['updatedAt']) ?? DateTime.now(),
     );
   }
 
@@ -80,48 +49,31 @@ class FirestoreInterventionMapper {
       'compressorId': intervention.compressorId,
       'clientName': intervention.clientName,
       'compressorName': intervention.compressorName,
-
       'type': intervention.type.name,
       'status': intervention.status.name,
-
       'title': intervention.title,
       'description': intervention.description,
       'technicianName': intervention.technicianName,
-
-      'startedAt':
-          Timestamp.fromDate(intervention.startedAt),
-
+      'startedAt': Timestamp.fromDate(intervention.startedAt),
       'completedAt': intervention.completedAt == null
           ? null
           : Timestamp.fromDate(
               intervention.completedAt!,
             ),
-
-      'nextInterventionDate':
-          intervention.nextInterventionDate == null
-              ? null
-              : Timestamp.fromDate(
-                  intervention.nextInterventionDate!,
-                ),
-
-      'durationMinutes':
-          intervention.durationMinutes,
-
-      'operatingHours':
-          intervention.operatingHours,
-
+      'nextInterventionDate': intervention.nextInterventionDate == null
+          ? null
+          : Timestamp.fromDate(
+              intervention.nextInterventionDate!,
+            ),
+      'durationMinutes': intervention.durationMinutes,
+      'operatingHours': intervention.operatingHours,
       'partsUsed': intervention.partsUsed,
       'checklist': intervention.checklist,
       'photoUrls': intervention.photoUrls,
       'documentUrls': intervention.documentUrls,
-
       'pdfUrl': intervention.pdfUrl,
-
-      'createdAt':
-          Timestamp.fromDate(intervention.createdAt),
-
-      'updatedAt':
-          Timestamp.fromDate(intervention.updatedAt),
+      'createdAt': Timestamp.fromDate(intervention.createdAt),
+      'updatedAt': Timestamp.fromDate(intervention.updatedAt),
     };
   }
 
@@ -139,13 +91,10 @@ class FirestoreInterventionMapper {
       // Compatibilidade temporária com documentos criados
       // enquanto os estados de oficina estavam em Intervention.
       'waitingToStart' => InterventionStatus.planned,
-      'waitingBudgetApproval' =>
-        InterventionStatus.inProgress,
+      'waitingBudgetApproval' => InterventionStatus.inProgress,
       'waitingParts' => InterventionStatus.inProgress,
-      'waitingCollection' =>
-        InterventionStatus.completed,
+      'waitingCollection' => InterventionStatus.completed,
       'delivered' => InterventionStatus.completed,
-
       _ => InterventionStatus.planned,
     };
   }

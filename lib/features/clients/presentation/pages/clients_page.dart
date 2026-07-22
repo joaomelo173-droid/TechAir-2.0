@@ -47,9 +47,9 @@ class _ClientsPageState extends State<ClientsPage> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               _Header(
-  onCreate: () => _openEditor(),
-  onImport: _importExcel,
-),
+                onCreate: () => _openEditor(),
+                onImport: _importExcel,
+              ),
               const SizedBox(height: 22),
               _Toolbar(
                 count: _controller.clients.length,
@@ -85,79 +85,77 @@ class _ClientsPageState extends State<ClientsPage> {
         itemBuilder: (context, index) {
           final client = _controller.clients[index];
           return ClientCard(
-  client: client,
-  onOpenDetails: () => _openCompressors(client),
-  onEdit: () => _openEditor(client),
-  onDelete: () => _confirmDelete(client),
-  onOpenCompressors: () => _openCompressors(client),
-);
+            client: client,
+            onOpenDetails: () => _openCompressors(client),
+            onEdit: () => _openEditor(client),
+            onDelete: () => _confirmDelete(client),
+            onOpenCompressors: () => _openCompressors(client),
+          );
         },
       ),
     );
   }
 
   Future<void> _importExcel() async {
-  try {
-    final pickerResult = await file_picker.FilePicker.pickFiles(
-      dialogTitle: 'Selecionar ficheiro Excel',
-      type: file_picker.FileType.custom,
-      allowedExtensions: const ['xlsx'],
-      allowMultiple: false,
-      withData: true,
-    );
+    try {
+      final pickerResult = await file_picker.FilePicker.pickFiles(
+        dialogTitle: 'Selecionar ficheiro Excel',
+        type: file_picker.FileType.custom,
+        allowedExtensions: const ['xlsx'],
+        allowMultiple: false,
+        withData: true,
+      );
 
-    if (!mounted ||
-        pickerResult == null ||
-        pickerResult.files.isEmpty) {
-      return;
-    }
+      if (!mounted || pickerResult == null || pickerResult.files.isEmpty) {
+        return;
+      }
 
-    final file = pickerResult.files.single;
-    final bytes = file.bytes;
+      final file = pickerResult.files.single;
+      final bytes = file.bytes;
 
-    if (bytes == null) {
+      if (bytes == null) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text('Não foi possível ler o ficheiro.'),
+          ),
+        );
+        return;
+      }
+
+      final importResult = const ClientExcelReader().read(
+        fileName: file.name,
+        bytes: bytes,
+      );
+
+      final summary = await ClientExcelImporter(
+        firestore: FirebaseFirestore.instance,
+        companyId: _controller.companyId,
+      ).import(importResult);
+
+      await _controller.load();
+
+      if (!mounted) return;
+
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text('Não foi possível ler o ficheiro.'),
+        SnackBar(
+          content: Text(
+            'Importação concluída. '
+            '${summary.createdClients} clientes criados • '
+            '${summary.updatedClients} atualizados • '
+            '${summary.processedRows} linhas processadas.',
+          ),
         ),
       );
-      return;
-    }
+    } catch (error) {
+      if (!mounted) return;
 
-    final importResult = const ClientExcelReader().read(
-      fileName: file.name,
-      bytes: bytes,
-    );
-
-    final summary = await ClientExcelImporter(
-      firestore: FirebaseFirestore.instance,
-      companyId: _controller.companyId,
-    ).import(importResult);
-
-    await _controller.load();
-
-    if (!mounted) return;
-
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Text(
-          'Importação concluída. '
-          '${summary.createdClients} clientes criados • '
-          '${summary.updatedClients} atualizados • '
-          '${summary.processedRows} linhas processadas.',
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('Erro ao importar o Excel: $error'),
         ),
-      ),
-    );
-  } catch (error) {
-    if (!mounted) return;
-
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Text('Erro ao importar o Excel: $error'),
-      ),
-    );
+      );
+    }
   }
-}
 
   Future<void> _openEditor([Client? client]) async {
     final result = await showDialog<Client>(
@@ -188,10 +186,15 @@ class _ClientsPageState extends State<ClientsPage> {
       context: context,
       builder: (context) => AlertDialog(
         title: const Text('Eliminar cliente?'),
-        content: Text('O cliente “${client.name}” será eliminado permanentemente.'),
+        content:
+            Text('O cliente “${client.name}” será eliminado permanentemente.'),
         actions: [
-          TextButton(onPressed: () => Navigator.pop(context, false), child: const Text('Cancelar')),
-          FilledButton(onPressed: () => Navigator.pop(context, true), child: const Text('Eliminar')),
+          TextButton(
+              onPressed: () => Navigator.pop(context, false),
+              child: const Text('Cancelar')),
+          FilledButton(
+              onPressed: () => Navigator.pop(context, true),
+              child: const Text('Eliminar')),
         ],
       ),
     );
@@ -211,14 +214,14 @@ class _ClientsPageState extends State<ClientsPage> {
   }
 
   void _openCompressors(Client client) {
-  Navigator.of(context).push(
-    MaterialPageRoute(
-      builder: (_) => CompressorsPage(
-        client: client,
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (_) => CompressorsPage(
+          client: client,
+        ),
       ),
-    ),
-  );
-}
+    );
+  }
 }
 
 class _Header extends StatelessWidget {
@@ -238,34 +241,40 @@ class _Header extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text('Clientes', style: Theme.of(context).textTheme.headlineMedium?.copyWith(fontWeight: FontWeight.w900)),
+              Text('Clientes',
+                  style: Theme.of(context)
+                      .textTheme
+                      .headlineMedium
+                      ?.copyWith(fontWeight: FontWeight.w900)),
               const SizedBox(height: 6),
-              const Text('Contactos, moradas, equipamentos e histórico documental.'),
+              const Text(
+                  'Contactos, moradas, equipamentos e histórico documental.'),
             ],
           ),
         ),
         Wrap(
-  spacing: 12,
-  children: [
-    OutlinedButton.icon(
-      onPressed: onImport,
-      icon: const Icon(Icons.upload_file_rounded),
-      label: const Text('Importar Excel'),
-    ),
-    FilledButton.icon(
-      onPressed: onCreate,
-      icon: const Icon(Icons.add_rounded),
-      label: const Text('Novo cliente'),
-    ),
-  ],
-),
+          spacing: 12,
+          children: [
+            OutlinedButton.icon(
+              onPressed: onImport,
+              icon: const Icon(Icons.upload_file_rounded),
+              label: const Text('Importar Excel'),
+            ),
+            FilledButton.icon(
+              onPressed: onCreate,
+              icon: const Icon(Icons.add_rounded),
+              label: const Text('Novo cliente'),
+            ),
+          ],
+        ),
       ],
     );
   }
 }
 
 class _Toolbar extends StatelessWidget {
-  const _Toolbar({required this.count, required this.onSearch, required this.onRefresh});
+  const _Toolbar(
+      {required this.count, required this.onSearch, required this.onRefresh});
 
   final int count;
   final ValueChanged<String> onSearch;
@@ -286,7 +295,8 @@ class _Toolbar extends StatelessWidget {
             child: TextField(
               onChanged: onSearch,
               decoration: const InputDecoration(
-                hintText: 'Pesquisar por nome, responsável, telefone, email ou localidade…',
+                hintText:
+                    'Pesquisar por nome, responsável, telefone, email ou localidade…',
                 prefixIcon: Icon(Icons.search_rounded),
                 isDense: true,
               ),
@@ -299,10 +309,14 @@ class _Toolbar extends StatelessWidget {
               color: AppColors.surfaceElevated,
               borderRadius: BorderRadius.circular(12),
             ),
-            child: Text('$count clientes', style: const TextStyle(fontWeight: FontWeight.w700)),
+            child: Text('$count clientes',
+                style: const TextStyle(fontWeight: FontWeight.w700)),
           ),
           const SizedBox(width: 8),
-          IconButton(onPressed: onRefresh, tooltip: 'Atualizar', icon: const Icon(Icons.refresh_rounded)),
+          IconButton(
+              onPressed: onRefresh,
+              tooltip: 'Atualizar',
+              icon: const Icon(Icons.refresh_rounded)),
         ],
       ),
     );
@@ -318,9 +332,11 @@ class _EmptyState extends StatelessWidget {
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          const Icon(Icons.person_search_rounded, size: 54, color: AppColors.textSecondary),
+          const Icon(Icons.person_search_rounded,
+              size: 54, color: AppColors.textSecondary),
           const SizedBox(height: 14),
-          Text('Nenhum cliente encontrado', style: Theme.of(context).textTheme.titleLarge),
+          Text('Nenhum cliente encontrado',
+              style: Theme.of(context).textTheme.titleLarge),
           const SizedBox(height: 6),
           const Text('Altera a pesquisa ou cria um novo cliente.'),
         ],

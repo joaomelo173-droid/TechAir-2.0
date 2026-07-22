@@ -20,10 +20,8 @@ class ClientFirestoreMapper {
       notes: data['notes'] as String? ?? '',
       compressorCount: (data['compressorCount'] ?? 0) as int,
       isActive: (data['isActive'] ?? true) as bool,
-      createdAt:
-          (data['createdAt'] as Timestamp?)?.toDate() ?? DateTime.now(),
-      updatedAt:
-          (data['updatedAt'] as Timestamp?)?.toDate() ?? DateTime.now(),
+      createdAt: (data['createdAt'] as Timestamp?)?.toDate() ?? DateTime.now(),
+      updatedAt: (data['updatedAt'] as Timestamp?)?.toDate() ?? DateTime.now(),
     );
   }
 

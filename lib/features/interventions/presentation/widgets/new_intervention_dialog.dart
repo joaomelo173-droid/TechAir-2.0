@@ -19,12 +19,10 @@ class NewInterventionDialog extends StatefulWidget {
   final String compressorName;
 
   @override
-  State<NewInterventionDialog> createState() =>
-      _NewInterventionDialogState();
+  State<NewInterventionDialog> createState() => _NewInterventionDialogState();
 }
 
-class _NewInterventionDialogState
-    extends State<NewInterventionDialog> {
+class _NewInterventionDialogState extends State<NewInterventionDialog> {
   final _formKey = GlobalKey<FormState>();
 
   final _titleController = TextEditingController();
@@ -228,9 +226,7 @@ class _NewInterventionDialogState
       description: _descriptionController.text.trim(),
       technicianName: _technicianController.text.trim(),
       startedAt: _startedAt,
-      completedAt: _status == InterventionStatus.completed
-          ? _startedAt
-          : null,
+      completedAt: _status == InterventionStatus.completed ? _startedAt : null,
       nextInterventionDate: _nextInterventionDate,
       durationMinutes: 0,
       operatingHours: null,
@@ -257,15 +253,15 @@ class _NewInterventionDialogState
   }
 
   static String _statusLabel(
-  InterventionStatus status,
-) {
-  return switch (status) {
-    InterventionStatus.planned => 'Planeada',
-    InterventionStatus.inProgress => 'Em curso',
-    InterventionStatus.completed => 'Concluída',
-    InterventionStatus.cancelled => 'Cancelada',
-  };
-}
+    InterventionStatus status,
+  ) {
+    return switch (status) {
+      InterventionStatus.planned => 'Planeada',
+      InterventionStatus.inProgress => 'Em curso',
+      InterventionStatus.completed => 'Concluída',
+      InterventionStatus.cancelled => 'Cancelada',
+    };
+  }
 }
 
 class _ReadOnlyField extends StatelessWidget {

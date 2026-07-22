@@ -36,7 +36,9 @@ class _StatCardState extends State<StatCard> {
         decoration: BoxDecoration(
           color: AppColors.surface,
           borderRadius: BorderRadius.circular(22),
-          border: Border.all(color: _hovered ? widget.accent.withOpacity(.42) : AppColors.border),
+          border: Border.all(
+              color:
+                  _hovered ? widget.accent.withOpacity(.42) : AppColors.border),
           boxShadow: _hovered
               ? [
                   BoxShadow(
@@ -75,11 +77,13 @@ class _StatCardState extends State<StatCard> {
                 ],
               ),
               const Spacer(),
-              Text(widget.label, style: const TextStyle(fontWeight: FontWeight.w800)),
+              Text(widget.label,
+                  style: const TextStyle(fontWeight: FontWeight.w800)),
               const SizedBox(height: 3),
               Text(
                 widget.caption,
-                style: const TextStyle(color: AppColors.textSecondary, fontSize: 12),
+                style: const TextStyle(
+                    color: AppColors.textSecondary, fontSize: 12),
               ),
             ],
           ),

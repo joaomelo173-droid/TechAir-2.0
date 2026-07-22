@@ -18,8 +18,7 @@ class TechAirIcon extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final resolvedColor =
-        color ?? IconTheme.of(context).color ?? Colors.white;
+    final resolvedColor = color ?? IconTheme.of(context).color ?? Colors.white;
 
     return SizedBox.square(
       dimension: size,

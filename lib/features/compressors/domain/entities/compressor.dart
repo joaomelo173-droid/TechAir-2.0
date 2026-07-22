@@ -236,8 +236,7 @@ class Compressor {
       serialNumber: serialNumber ?? this.serialNumber,
       manufactureYear: manufactureYear ?? this.manufactureYear,
       compressorType: compressorType ?? this.compressorType,
-      workingPressureBar:
-          workingPressureBar ?? this.workingPressureBar,
+      workingPressureBar: workingPressureBar ?? this.workingPressureBar,
       testPressureBar: testPressureBar ?? this.testPressureBar,
       finalPressureBar: finalPressureBar ?? this.finalPressureBar,
       chargingRateLitersMinute:
@@ -254,23 +253,17 @@ class Compressor {
       material: material ?? this.material,
       notes: notes ?? this.notes,
       responsible: responsible ?? this.responsible,
-      responsibleEmail:
-          responsibleEmail ?? this.responsibleEmail,
-      equipmentDetails:
-          equipmentDetails ?? this.equipmentDetails,
+      responsibleEmail: responsibleEmail ?? this.responsibleEmail,
+      equipmentDetails: equipmentDetails ?? this.equipmentDetails,
       district: district ?? this.district,
-      lastMaintenanceDate:
-          lastMaintenanceDate ?? this.lastMaintenanceDate,
-      nextMaintenanceDate:
-          nextMaintenanceDate ?? this.nextMaintenanceDate,
-      maintenanceStatus:
-          maintenanceStatus ?? this.maintenanceStatus,
+      lastMaintenanceDate: lastMaintenanceDate ?? this.lastMaintenanceDate,
+      nextMaintenanceDate: nextMaintenanceDate ?? this.nextMaintenanceDate,
+      maintenanceStatus: maintenanceStatus ?? this.maintenanceStatus,
       lastModernizationDate:
           lastModernizationDate ?? this.lastModernizationDate,
       nextModernizationDate:
           nextModernizationDate ?? this.nextModernizationDate,
-      modernizationStatus:
-          modernizationStatus ?? this.modernizationStatus,
+      modernizationStatus: modernizationStatus ?? this.modernizationStatus,
       quoteSent: quoteSent ?? this.quoteSent,
       alert: alert ?? this.alert,
       lastAlertDate: lastAlertDate ?? this.lastAlertDate,

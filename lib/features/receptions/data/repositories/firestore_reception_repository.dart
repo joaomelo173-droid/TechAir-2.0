@@ -4,17 +4,15 @@ import '../../domain/entities/reception.dart';
 import '../../domain/repositories/reception_repository.dart';
 import '../mappers/firestore_reception_mapper.dart';
 
-class FirestoreReceptionRepository
-    implements ReceptionRepository {
+class FirestoreReceptionRepository implements ReceptionRepository {
   FirestoreReceptionRepository({
     FirebaseFirestore? firestore,
-  }) : _firestore =
-            firestore ?? FirebaseFirestore.instance;
+  }) : _firestore = firestore ?? FirebaseFirestore.instance;
 
   final FirebaseFirestore _firestore;
 
-  CollectionReference<Map<String, dynamic>>
-      _receptionsCollection(String companyId) {
+  CollectionReference<Map<String, dynamic>> _receptionsCollection(
+      String companyId) {
     return _firestore
         .collection('empresas')
         .doc(companyId)
@@ -44,9 +42,8 @@ class FirestoreReceptionRepository
         .where('clientId', isEqualTo: clientId)
         .snapshots()
         .map((snapshot) {
-      final receptions = snapshot.docs
-          .map(FirestoreReceptionMapper.fromFirestore)
-          .toList();
+      final receptions =
+          snapshot.docs.map(FirestoreReceptionMapper.fromFirestore).toList();
 
       receptions.sort(
         (a, b) => b.receivedAt.compareTo(a.receivedAt),
@@ -65,9 +62,8 @@ class FirestoreReceptionRepository
         .where('compressorId', isEqualTo: compressorId)
         .snapshots()
         .map((snapshot) {
-      final receptions = snapshot.docs
-          .map(FirestoreReceptionMapper.fromFirestore)
-          .toList();
+      final receptions =
+          snapshot.docs.map(FirestoreReceptionMapper.fromFirestore).toList();
 
       receptions.sort(
         (a, b) => b.receivedAt.compareTo(a.receivedAt),
@@ -82,9 +78,8 @@ class FirestoreReceptionRepository
     required String companyId,
     required String receptionId,
   }) async {
-    final document = await _receptionsCollection(companyId)
-        .doc(receptionId)
-        .get();
+    final document =
+        await _receptionsCollection(companyId).doc(receptionId).get();
 
     if (!document.exists) {
       return null;
@@ -99,8 +94,7 @@ class FirestoreReceptionRepository
   Future<String> createReception({
     required Reception reception,
   }) async {
-    final collection =
-        _receptionsCollection(reception.companyId);
+    final collection = _receptionsCollection(reception.companyId);
 
     final document = reception.id.trim().isEmpty
         ? collection.doc()
@@ -133,9 +127,7 @@ class FirestoreReceptionRepository
       updatedAt: DateTime.now(),
     );
 
-    await _receptionsCollection(reception.companyId)
-        .doc(reception.id)
-        .set(
+    await _receptionsCollection(reception.companyId).doc(reception.id).set(
           FirestoreReceptionMapper.toFirestore(
             updatedReception,
           ),
@@ -154,9 +146,7 @@ class FirestoreReceptionRepository
       );
     }
 
-    await _receptionsCollection(companyId)
-        .doc(receptionId)
-        .update({
+    await _receptionsCollection(companyId).doc(receptionId).update({
       'status': ReceptionStatus.cancelled.name,
       'updatedAt': Timestamp.fromDate(DateTime.now()),
     });
@@ -173,8 +163,6 @@ class FirestoreReceptionRepository
       );
     }
 
-    await _receptionsCollection(companyId)
-        .doc(receptionId)
-        .delete();
+    await _receptionsCollection(companyId).doc(receptionId).delete();
   }
 }

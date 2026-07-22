@@ -15,8 +15,7 @@ class NewCompressorDialog extends StatefulWidget {
   final String clientName;
 
   @override
-  State<NewCompressorDialog> createState() =>
-      _NewCompressorDialogState();
+  State<NewCompressorDialog> createState() => _NewCompressorDialogState();
 }
 
 class _NewCompressorDialogState extends State<NewCompressorDialog> {
@@ -102,13 +101,10 @@ class _NewCompressorDialogState extends State<NewCompressorDialog> {
       serialNumber: _serialNumberController.text.trim(),
       manufactureYear: _parseInt(_yearController.text),
       compressorType: _typeController.text.trim(),
-      workingPressureBar:
-          _parseDouble(_workingPressureController.text),
+      workingPressureBar: _parseDouble(_workingPressureController.text),
       testPressureBar: null,
-      finalPressureBar:
-          _parseDouble(_finalPressureController.text),
-      chargingRateLitersMinute:
-          _parseDouble(_chargingRateController.text),
+      finalPressureBar: _parseDouble(_finalPressureController.text),
+      chargingRateLitersMinute: _parseDouble(_chargingRateController.text),
       motorPowerKw: _parseDouble(_motorPowerController.text),
       voltage: null,
       phases: null,
@@ -159,7 +155,6 @@ class _NewCompressorDialogState extends State<NewCompressorDialog> {
                   style: Theme.of(context).textTheme.titleMedium,
                 ),
                 const SizedBox(height: 20),
-
                 Wrap(
                   spacing: 16,
                   runSpacing: 16,
@@ -208,15 +203,12 @@ class _NewCompressorDialogState extends State<NewCompressorDialog> {
                     ),
                   ],
                 ),
-
                 const SizedBox(height: 24),
-
                 Text(
                   'Contacto',
                   style: Theme.of(context).textTheme.titleMedium,
                 ),
                 const SizedBox(height: 12),
-
                 Wrap(
                   spacing: 16,
                   runSpacing: 16,
@@ -234,15 +226,12 @@ class _NewCompressorDialogState extends State<NewCompressorDialog> {
                     ),
                   ],
                 ),
-
                 const SizedBox(height: 24),
-
                 Text(
                   'Dados técnicos',
                   style: Theme.of(context).textTheme.titleMedium,
                 ),
                 const SizedBox(height: 12),
-
                 Wrap(
                   spacing: 16,
                   runSpacing: 16,
@@ -251,8 +240,7 @@ class _NewCompressorDialogState extends State<NewCompressorDialog> {
                       controller: _workingPressureController,
                       label: 'Pressão de trabalho (bar)',
                       width: 220,
-                      keyboardType:
-                          const TextInputType.numberWithOptions(
+                      keyboardType: const TextInputType.numberWithOptions(
                         decimal: true,
                       ),
                     ),
@@ -260,8 +248,7 @@ class _NewCompressorDialogState extends State<NewCompressorDialog> {
                       controller: _finalPressureController,
                       label: 'Pressão final (bar)',
                       width: 220,
-                      keyboardType:
-                          const TextInputType.numberWithOptions(
+                      keyboardType: const TextInputType.numberWithOptions(
                         decimal: true,
                       ),
                     ),
@@ -269,8 +256,7 @@ class _NewCompressorDialogState extends State<NewCompressorDialog> {
                       controller: _chargingRateController,
                       label: 'Caudal (l/min)',
                       width: 220,
-                      keyboardType:
-                          const TextInputType.numberWithOptions(
+                      keyboardType: const TextInputType.numberWithOptions(
                         decimal: true,
                       ),
                     ),
@@ -278,16 +264,13 @@ class _NewCompressorDialogState extends State<NewCompressorDialog> {
                       controller: _motorPowerController,
                       label: 'Potência (kW)',
                       width: 220,
-                      keyboardType:
-                          const TextInputType.numberWithOptions(
+                      keyboardType: const TextInputType.numberWithOptions(
                         decimal: true,
                       ),
                     ),
                   ],
                 ),
-
                 const SizedBox(height: 20),
-
                 DropdownButtonFormField<String>(
                   initialValue: _status,
                   decoration: const InputDecoration(
@@ -316,9 +299,7 @@ class _NewCompressorDialogState extends State<NewCompressorDialog> {
                     }
                   },
                 ),
-
                 const SizedBox(height: 20),
-
                 TextFormField(
                   controller: _equipmentDetailsController,
                   minLines: 2,
@@ -328,9 +309,7 @@ class _NewCompressorDialogState extends State<NewCompressorDialog> {
                     border: OutlineInputBorder(),
                   ),
                 ),
-
                 const SizedBox(height: 16),
-
                 TextFormField(
                   controller: _notesController,
                   minLines: 2,

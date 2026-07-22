@@ -4,8 +4,7 @@ import '../../domain/entities/intervention.dart';
 import '../../domain/repositories/intervention_repository.dart';
 import '../mappers/firestore_intervention_mapper.dart';
 
-class FirestoreInterventionRepository
-    implements InterventionRepository {
+class FirestoreInterventionRepository implements InterventionRepository {
   FirestoreInterventionRepository(this.firestore);
 
   final FirebaseFirestore firestore;
@@ -26,65 +25,63 @@ class FirestoreInterventionRepository
   }
 
   @override
-Future<List<Intervention>> getAll({
-  required String companyId,
-}) async {
-  final clientsSnapshot = await firestore
-      .collection('empresas')
-      .doc(companyId)
-      .collection('clientes')
-      .get();
+  Future<List<Intervention>> getAll({
+    required String companyId,
+  }) async {
+    final clientsSnapshot = await firestore
+        .collection('empresas')
+        .doc(companyId)
+        .collection('clientes')
+        .get();
 
-  final interventions = <Intervention>[];
+    final interventions = <Intervention>[];
 
-  for (final clientDocument in clientsSnapshot.docs) {
-    final clientData = clientDocument.data();
-    final clientName = (clientData['name'] ?? '').toString().trim();
+    for (final clientDocument in clientsSnapshot.docs) {
+      final clientData = clientDocument.data();
+      final clientName = (clientData['name'] ?? '').toString().trim();
 
-    final compressorsSnapshot =
-        await clientDocument.reference.collection('compressores').get();
+      final compressorsSnapshot =
+          await clientDocument.reference.collection('compressores').get();
 
-    for (final compressorDocument in compressorsSnapshot.docs) {
-      final compressorData = compressorDocument.data();
+      for (final compressorDocument in compressorsSnapshot.docs) {
+        final compressorData = compressorDocument.data();
 
-      final compressorName = [
-        (compressorData['brand'] ?? '').toString().trim(),
-        (compressorData['model'] ?? '').toString().trim(),
-      ].where((value) => value.isNotEmpty).join(' ');
+        final compressorName = [
+          (compressorData['brand'] ?? '').toString().trim(),
+          (compressorData['model'] ?? '').toString().trim(),
+        ].where((value) => value.isNotEmpty).join(' ');
 
-      final interventionsSnapshot = await compressorDocument.reference
-          .collection('intervencoes')
-          .get();
+        final interventionsSnapshot =
+            await compressorDocument.reference.collection('intervencoes').get();
 
-      for (final interventionDocument in interventionsSnapshot.docs) {
-        final intervention =
-            FirestoreInterventionMapper.fromFirestore(
-          interventionDocument,
-        );
+        for (final interventionDocument in interventionsSnapshot.docs) {
+          final intervention = FirestoreInterventionMapper.fromFirestore(
+            interventionDocument,
+          );
 
-        interventions.add(
-          intervention.copyWith(
-            companyId: companyId,
-            clientId: clientDocument.id,
-            compressorId: compressorDocument.id,
-            clientName: intervention.clientName.isNotEmpty
-                ? intervention.clientName
-                : clientName,
-            compressorName: intervention.compressorName.isNotEmpty
-                ? intervention.compressorName
-                : compressorName,
-          ),
-        );
+          interventions.add(
+            intervention.copyWith(
+              companyId: companyId,
+              clientId: clientDocument.id,
+              compressorId: compressorDocument.id,
+              clientName: intervention.clientName.isNotEmpty
+                  ? intervention.clientName
+                  : clientName,
+              compressorName: intervention.compressorName.isNotEmpty
+                  ? intervention.compressorName
+                  : compressorName,
+            ),
+          );
+        }
       }
     }
+
+    interventions.sort(
+      (a, b) => b.startedAt.compareTo(a.startedAt),
+    );
+
+    return interventions;
   }
-
-  interventions.sort(
-    (a, b) => b.startedAt.compareTo(a.startedAt),
-  );
-
-  return interventions;
-}
 
   @override
   Future<List<Intervention>> getByCompressor({
@@ -96,10 +93,12 @@ Future<List<Intervention>> getAll({
       companyId: companyId,
       clientId: clientId,
       compressorId: compressorId,
-    ).orderBy(
-      'startedAt',
-      descending: true,
-    ).get();
+    )
+        .orderBy(
+          'startedAt',
+          descending: true,
+        )
+        .get();
 
     return snapshot.docs
         .map(FirestoreInterventionMapper.fromFirestore)
@@ -131,10 +130,8 @@ Future<List<Intervention>> getAll({
       clientId: clientId,
       compressorId: compressorId,
       clientName: intervention.clientName,
-compressorName: intervention.compressorName,
-      createdAt: intervention.id.isEmpty
-          ? now
-          : intervention.createdAt,
+      compressorName: intervention.compressorName,
+      createdAt: intervention.id.isEmpty ? now : intervention.createdAt,
       updatedAt: now,
     );
 

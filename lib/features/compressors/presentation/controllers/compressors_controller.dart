@@ -51,9 +51,8 @@ class CompressorsController extends ChangeNotifier {
   }
 
   Future<bool> save(Compressor compressor) async {
-    final resolvedClientId = compressor.clientId.trim().isNotEmpty
-        ? compressor.clientId
-        : clientId;
+    final resolvedClientId =
+        compressor.clientId.trim().isNotEmpty ? compressor.clientId : clientId;
 
     if (resolvedClientId == null || resolvedClientId.trim().isEmpty) {
       _error = 'O compressor tem de estar associado a um cliente.';

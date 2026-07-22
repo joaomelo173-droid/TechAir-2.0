@@ -98,21 +98,17 @@ class Reception {
   final DateTime createdAt;
   final DateTime updatedAt;
 
-  bool get hasMaintenance =>
-      reasons.contains(ReceptionReason.maintenance);
+  bool get hasMaintenance => reasons.contains(ReceptionReason.maintenance);
 
-  bool get hasBreakdown =>
-      reasons.contains(ReceptionReason.breakdown);
+  bool get hasBreakdown => reasons.contains(ReceptionReason.breakdown);
 
-  bool get hasModernization =>
-      reasons.contains(ReceptionReason.modernization);
+  bool get hasModernization => reasons.contains(ReceptionReason.modernization);
 
   bool get hasPhotos => photoUrls.isNotEmpty;
 
   bool get hasWorkshopJob => workshopJobId.trim().isNotEmpty;
 
-  bool get isCancelled =>
-      status == ReceptionStatus.cancelled;
+  bool get isCancelled => status == ReceptionStatus.cancelled;
 
   String get reasonsLabel {
     if (reasons.isEmpty) {
@@ -142,44 +138,28 @@ class Reception {
     CompressorFaultType faultType,
   ) {
     return switch (faultType) {
-      CompressorFaultType.doesNotStart =>
-        'Não liga',
-      CompressorFaultType.electricalFault =>
-        'Falha elétrica',
-      CompressorFaultType.protectionTrips =>
-        'Disjuntor ou proteção dispara',
-      CompressorFaultType.lowPressure =>
-        'Pressão insuficiente',
-      CompressorFaultType.noAirProduction =>
-        'Não produz ar',
-      CompressorFaultType.airLeak =>
-        'Fuga de ar',
-      CompressorFaultType.oilLeak =>
-        'Fuga de óleo',
+      CompressorFaultType.doesNotStart => 'Não liga',
+      CompressorFaultType.electricalFault => 'Falha elétrica',
+      CompressorFaultType.protectionTrips => 'Disjuntor ou proteção dispara',
+      CompressorFaultType.lowPressure => 'Pressão insuficiente',
+      CompressorFaultType.noAirProduction => 'Não produz ar',
+      CompressorFaultType.airLeak => 'Fuga de ar',
+      CompressorFaultType.oilLeak => 'Fuga de óleo',
       CompressorFaultType.excessiveOilConsumption =>
         'Consumo excessivo de óleo',
-      CompressorFaultType.overheating =>
-        'Sobreaquecimento',
-      CompressorFaultType.abnormalNoise =>
-        'Ruído anormal',
-      CompressorFaultType.excessiveVibration =>
-        'Vibração excessiva',
+      CompressorFaultType.overheating => 'Sobreaquecimento',
+      CompressorFaultType.abnormalNoise => 'Ruído anormal',
+      CompressorFaultType.excessiveVibration => 'Vibração excessiva',
       CompressorFaultType.safetyValveActivation =>
         'Válvula de segurança dispara',
-      CompressorFaultType.doesNotLoad =>
-        'Não entra em carga',
-      CompressorFaultType.doesNotUnload =>
-        'Não descarrega',
-      CompressorFaultType.cloggedFilter =>
-        'Filtro obstruído',
-      CompressorFaultType.cloggedOilSeparator =>
-        'Separador de óleo obstruído',
-      CompressorFaultType.dryerFault =>
-        'Problema no secador',
+      CompressorFaultType.doesNotLoad => 'Não entra em carga',
+      CompressorFaultType.doesNotUnload => 'Não descarrega',
+      CompressorFaultType.cloggedFilter => 'Filtro obstruído',
+      CompressorFaultType.cloggedOilSeparator => 'Separador de óleo obstruído',
+      CompressorFaultType.dryerFault => 'Problema no secador',
       CompressorFaultType.excessiveCondensate =>
         'Excesso de água ou condensados',
-      CompressorFaultType.other =>
-        'Outro',
+      CompressorFaultType.other => 'Outro',
     };
   }
 
@@ -211,27 +191,20 @@ class Reception {
       clientId: clientId ?? this.clientId,
       compressorId: compressorId ?? this.compressorId,
       clientName: clientName ?? this.clientName,
-      compressorName:
-          compressorName ?? this.compressorName,
+      compressorName: compressorName ?? this.compressorName,
       receivedAt: receivedAt ?? this.receivedAt,
       receivedBy: receivedBy ?? this.receivedBy,
       reasons: reasons ?? this.reasons,
-      expectedMaintenance:
-          expectedMaintenance ?? this.expectedMaintenance,
+      expectedMaintenance: expectedMaintenance ?? this.expectedMaintenance,
       faultTypes: faultTypes ?? this.faultTypes,
-      reportedFault:
-          reportedFault ?? this.reportedFault,
-      expectedRepair:
-          expectedRepair ?? this.expectedRepair,
+      reportedFault: reportedFault ?? this.reportedFault,
+      expectedRepair: expectedRepair ?? this.expectedRepair,
       expectedModernization:
-          expectedModernization ??
-              this.expectedModernization,
-      observations:
-          observations ?? this.observations,
+          expectedModernization ?? this.expectedModernization,
+      observations: observations ?? this.observations,
       photoUrls: photoUrls ?? this.photoUrls,
       status: status ?? this.status,
-      workshopJobId:
-          workshopJobId ?? this.workshopJobId,
+      workshopJobId: workshopJobId ?? this.workshopJobId,
       createdAt: createdAt ?? this.createdAt,
       updatedAt: updatedAt ?? this.updatedAt,
     );

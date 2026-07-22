@@ -21,47 +21,45 @@ class FirestoreCompressorRepository implements CompressorRepository {
         .collection('compressores');
   }
 
-@override
-Future<List<Compressor>> getAll({
-  required String companyId,
-}) async {
-  final clientsSnapshot = await firestore
-      .collection('empresas')
-      .doc(companyId)
-      .collection('clientes')
-      .get();
-
-  final compressors = <Compressor>[];
-
-  for (final clientDocument in clientsSnapshot.docs) {
-    final clientData = clientDocument.data();
-    final clientName = (clientData['name'] ?? '').toString().trim();
-
-    final snapshot = await clientDocument.reference
-        .collection('compressores')
+  @override
+  Future<List<Compressor>> getAll({
+    required String companyId,
+  }) async {
+    final clientsSnapshot = await firestore
+        .collection('empresas')
+        .doc(companyId)
+        .collection('clientes')
         .get();
 
-    for (final document in snapshot.docs) {
-      final compressor =
-          CompressorFirestoreMapper.fromFirestore(document);
+    final compressors = <Compressor>[];
 
-      compressors.add(
-        compressor.copyWith(
-          clientId: clientDocument.id,
-          clientName: clientName,
-        ),
-      );
+    for (final clientDocument in clientsSnapshot.docs) {
+      final clientData = clientDocument.data();
+      final clientName = (clientData['name'] ?? '').toString().trim();
+
+      final snapshot =
+          await clientDocument.reference.collection('compressores').get();
+
+      for (final document in snapshot.docs) {
+        final compressor = CompressorFirestoreMapper.fromFirestore(document);
+
+        compressors.add(
+          compressor.copyWith(
+            clientId: clientDocument.id,
+            clientName: clientName,
+          ),
+        );
+      }
     }
+
+    compressors.sort(
+      (a, b) => a.displayName.toLowerCase().compareTo(
+            b.displayName.toLowerCase(),
+          ),
+    );
+
+    return compressors;
   }
-
-  compressors.sort(
-    (a, b) => a.displayName.toLowerCase().compareTo(
-          b.displayName.toLowerCase(),
-        ),
-  );
-
-  return compressors;
-}
 
   @override
   Future<List<Compressor>> getByClient({
@@ -73,9 +71,8 @@ Future<List<Compressor>> getAll({
       clientId: clientId,
     ).get();
 
-    final compressors = snapshot.docs
-        .map(CompressorFirestoreMapper.fromFirestore)
-        .toList();
+    final compressors =
+        snapshot.docs.map(CompressorFirestoreMapper.fromFirestore).toList();
 
     compressors.sort(
       (a, b) => a.displayName.toLowerCase().compareTo(

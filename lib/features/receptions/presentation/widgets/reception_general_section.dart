@@ -51,15 +51,11 @@ class ReceptionGeneralSection extends StatelessWidget {
           children: [
             Text(
               'Dados Gerais',
-              style: Theme.of(context)
-                  .textTheme
-                  .titleMedium
-                  ?.copyWith(
+              style: Theme.of(context).textTheme.titleMedium?.copyWith(
                     fontWeight: FontWeight.bold,
                   ),
             ),
             const SizedBox(height: 16),
-
             DropdownButtonFormField<String>(
               initialValue: _existingValue(
                 selectedClientId,
@@ -89,8 +85,7 @@ class ReceptionGeneralSection extends StatelessWidget {
               },
               items: clients
                   .map(
-                    (client) =>
-                        DropdownMenuItem<String>(
+                    (client) => DropdownMenuItem<String>(
                       value: client.id,
                       child: _OptionLabel(
                         label: client.label,
@@ -99,11 +94,9 @@ class ReceptionGeneralSection extends StatelessWidget {
                     ),
                   )
                   .toList(),
-              onChanged:
-                  enabled ? onClientChanged : null,
+              onChanged: enabled ? onClientChanged : null,
               validator: (value) {
-                if (value == null ||
-                    value.trim().isEmpty) {
+                if (value == null || value.trim().isEmpty) {
                   return 'Selecione o cliente.';
                 }
 
@@ -111,7 +104,6 @@ class ReceptionGeneralSection extends StatelessWidget {
               },
             ),
             const SizedBox(height: 16),
-
             DropdownButtonFormField<String>(
               initialValue: _existingValue(
                 selectedCompressorId,
@@ -146,8 +138,7 @@ class ReceptionGeneralSection extends StatelessWidget {
               },
               items: compressors
                   .map(
-                    (compressor) =>
-                        DropdownMenuItem<String>(
+                    (compressor) => DropdownMenuItem<String>(
                       value: compressor.id,
                       child: _OptionLabel(
                         label: compressor.label,
@@ -156,14 +147,12 @@ class ReceptionGeneralSection extends StatelessWidget {
                     ),
                   )
                   .toList(),
-              onChanged: enabled &&
-                      selectedClientId != null &&
-                      compressors.isNotEmpty
-                  ? onCompressorChanged
-                  : null,
+              onChanged:
+                  enabled && selectedClientId != null && compressors.isNotEmpty
+                      ? onCompressorChanged
+                      : null,
               validator: (value) {
-                if (value == null ||
-                    value.trim().isEmpty) {
+                if (value == null || value.trim().isEmpty) {
                   return 'Selecione o compressor.';
                 }
 
@@ -171,12 +160,10 @@ class ReceptionGeneralSection extends StatelessWidget {
               },
             ),
             const SizedBox(height: 16),
-
             TextFormField(
               controller: receivedByController,
               enabled: enabled,
-              textCapitalization:
-                  TextCapitalization.words,
+              textCapitalization: TextCapitalization.words,
               decoration: const InputDecoration(
                 labelText: 'Recebido por',
                 hintText: 'Nome do colaborador',
@@ -186,8 +173,7 @@ class ReceptionGeneralSection extends StatelessWidget {
                 ),
               ),
               validator: (value) {
-                if (value == null ||
-                    value.trim().isEmpty) {
+                if (value == null || value.trim().isEmpty) {
                   return 'Indique quem recebeu o compressor.';
                 }
 
@@ -195,7 +181,6 @@ class ReceptionGeneralSection extends StatelessWidget {
               },
             ),
             const SizedBox(height: 16),
-
             InputDecorator(
               decoration: const InputDecoration(
                 labelText: 'Data e hora da receção',
@@ -218,8 +203,7 @@ class ReceptionGeneralSection extends StatelessWidget {
     String? selectedId,
     List<ReceptionSelectOption> options,
   ) {
-    if (selectedId == null ||
-        selectedId.trim().isEmpty) {
+    if (selectedId == null || selectedId.trim().isEmpty) {
       return null;
     }
 
@@ -231,16 +215,12 @@ class ReceptionGeneralSection extends StatelessWidget {
   }
 
   String _formatDateTime(DateTime dateTime) {
-    final day =
-        dateTime.day.toString().padLeft(2, '0');
-    final month =
-        dateTime.month.toString().padLeft(2, '0');
+    final day = dateTime.day.toString().padLeft(2, '0');
+    final month = dateTime.month.toString().padLeft(2, '0');
     final year = dateTime.year.toString();
 
-    final hour =
-        dateTime.hour.toString().padLeft(2, '0');
-    final minute =
-        dateTime.minute.toString().padLeft(2, '0');
+    final hour = dateTime.hour.toString().padLeft(2, '0');
+    final minute = dateTime.minute.toString().padLeft(2, '0');
 
     return '$day/$month/$year às $hour:$minute';
   }
@@ -271,8 +251,7 @@ class _OptionLabel extends StatelessWidget {
       ),
       child: Column(
         mainAxisSize: MainAxisSize.min,
-        crossAxisAlignment:
-            CrossAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
             label,
@@ -284,9 +263,7 @@ class _OptionLabel extends StatelessWidget {
             subtitle,
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
-            style: Theme.of(context)
-                .textTheme
-                .bodySmall,
+            style: Theme.of(context).textTheme.bodySmall,
           ),
         ],
       ),

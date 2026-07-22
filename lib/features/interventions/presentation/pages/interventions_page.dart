@@ -11,14 +11,12 @@ class InterventionsPage extends StatefulWidget {
   const InterventionsPage({super.key});
 
   @override
-  State<InterventionsPage> createState() =>
-      _InterventionsPageState();
+  State<InterventionsPage> createState() => _InterventionsPageState();
 }
 
 class _InterventionsPageState extends State<InterventionsPage> {
   late final InterventionsController _controller;
-  final TextEditingController _searchController =
-      TextEditingController();
+  final TextEditingController _searchController = TextEditingController();
 
   InterventionType? _selectedType;
 
@@ -58,8 +56,7 @@ class _InterventionsPageState extends State<InterventionsPage> {
     final query = _searchController.text.trim().toLowerCase();
 
     return _controller.interventions.where((intervention) {
-      if (_selectedType != null &&
-          intervention.type != _selectedType) {
+      if (_selectedType != null && intervention.type != _selectedType) {
         return false;
       }
 
@@ -82,22 +79,22 @@ class _InterventionsPageState extends State<InterventionsPage> {
   }
 
   Future<void> _openInterventionDetails(
-  Intervention intervention,
-) async {
-  await showModalBottomSheet<void>(
-    context: context,
-    isScrollControlled: true,
-    useSafeArea: true,
-    builder: (context) {
-      return FractionallySizedBox(
-        heightFactor: 0.92,
-        child: _InterventionDetailsSheet(
-          intervention: intervention,
-        ),
-      );
-    },
-  );
-}
+    Intervention intervention,
+  ) async {
+    await showModalBottomSheet<void>(
+      context: context,
+      isScrollControlled: true,
+      useSafeArea: true,
+      builder: (context) {
+        return FractionallySizedBox(
+          heightFactor: 0.92,
+          child: _InterventionDetailsSheet(
+            intervention: intervention,
+          ),
+        );
+      },
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -143,122 +140,121 @@ class _InterventionsPageState extends State<InterventionsPage> {
   }
 
   Future<void> _showNewInterventionMessage() async {
-  try {
-    final compressorRepository = FirestoreCompressorRepository(
-      FirebaseFirestore.instance,
-    );
+    try {
+      final compressorRepository = FirestoreCompressorRepository(
+        FirebaseFirestore.instance,
+      );
 
-    final compressors = await compressorRepository.getAll(
-      companyId: 'extincendios',
-    );
+      final compressors = await compressorRepository.getAll(
+        companyId: 'extincendios',
+      );
 
-    if (!mounted) {
-      return;
-    }
+      if (!mounted) {
+        return;
+      }
 
-    if (compressors.isEmpty) {
+      if (compressors.isEmpty) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text('Não existem compressores registados.'),
+          ),
+        );
+        return;
+      }
+
+      final compressor = await showDialog<Compressor>(
+        context: context,
+        builder: (dialogContext) {
+          return AlertDialog(
+            title: const Text('Selecionar compressor'),
+            content: SizedBox(
+              width: 600,
+              height: 460,
+              child: ListView.separated(
+                itemCount: compressors.length,
+                separatorBuilder: (_, __) => const Divider(height: 1),
+                itemBuilder: (context, index) {
+                  final item = compressors[index];
+
+                  return ListTile(
+                    leading: const Icon(Icons.air_rounded),
+                    title: Text(item.displayName),
+                    subtitle: Text(
+                      item.clientName.trim().isEmpty
+                          ? 'Cliente não identificado'
+                          : item.clientName,
+                    ),
+                    onTap: () {
+                      Navigator.of(dialogContext).pop(item);
+                    },
+                  );
+                },
+              ),
+            ),
+            actions: [
+              TextButton(
+                onPressed: () {
+                  Navigator.of(dialogContext).pop();
+                },
+                child: const Text('Cancelar'),
+              ),
+            ],
+          );
+        },
+      );
+
+      if (compressor == null || !mounted) {
+        return;
+      }
+
+      final intervention = await showDialog<Intervention>(
+        context: context,
+        barrierDismissible: false,
+        builder: (_) {
+          return NewInterventionDialog(
+            companyId: 'extincendios',
+            clientId: compressor.clientId,
+            clientName: compressor.clientName,
+            compressorId: compressor.id,
+            compressorName: compressor.displayName,
+          );
+        },
+      );
+
+      if (intervention == null || !mounted) {
+        return;
+      }
+
+      final saved = await _controller.save(intervention);
+
+      if (!mounted) {
+        return;
+      }
+
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text('Não existem compressores registados.'),
+        SnackBar(
+          content: Text(
+            saved
+                ? 'Intervenção guardada com sucesso.'
+                : _controller.error ??
+                    'Não foi possível guardar a intervenção.',
+          ),
         ),
       );
-      return;
-    }
+    } catch (error) {
+      if (!mounted) {
+        return;
+      }
 
-    final compressor = await showDialog<Compressor>(
-      context: context,
-      builder: (dialogContext) {
-        return AlertDialog(
-          title: const Text('Selecionar compressor'),
-          content: SizedBox(
-            width: 600,
-            height: 460,
-            child: ListView.separated(
-              itemCount: compressors.length,
-              separatorBuilder: (_, __) =>
-                  const Divider(height: 1),
-              itemBuilder: (context, index) {
-                final item = compressors[index];
-
-                return ListTile(
-                  leading: const Icon(Icons.air_rounded),
-                  title: Text(item.displayName),
-                  subtitle: Text(
-                    item.clientName.trim().isEmpty
-                        ? 'Cliente não identificado'
-                        : item.clientName,
-                  ),
-                  onTap: () {
-                    Navigator.of(dialogContext).pop(item);
-                  },
-                );
-              },
-            ),
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(
+            'Não foi possível carregar os compressores: $error',
           ),
-          actions: [
-            TextButton(
-              onPressed: () {
-                Navigator.of(dialogContext).pop();
-              },
-              child: const Text('Cancelar'),
-            ),
-          ],
-        );
-      },
-    );
-
-    if (compressor == null || !mounted) {
-      return;
-    }
-
-    final intervention = await showDialog<Intervention>(
-      context: context,
-      barrierDismissible: false,
-      builder: (_) {
-        return NewInterventionDialog(
-          companyId: 'extincendios',
-          clientId: compressor.clientId,
-          clientName: compressor.clientName,
-          compressorId: compressor.id,
-          compressorName: compressor.displayName,
-        );
-      },
-    );
-
-    if (intervention == null || !mounted) {
-      return;
-    }
-
-    final saved = await _controller.save(intervention);
-
-    if (!mounted) {
-      return;
-    }
-
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Text(
-          saved
-              ? 'Intervenção guardada com sucesso.'
-              : _controller.error ??
-                  'Não foi possível guardar a intervenção.',
         ),
-      ),
-    );
-  } catch (error) {
-    if (!mounted) {
-      return;
+      );
     }
-
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Text(
-          'Não foi possível carregar os compressores: $error',
-        ),
-      ),
-    );
   }
-}
 
   Widget _buildSearchField() {
     return TextField(
@@ -366,18 +362,17 @@ class _InterventionsPageState extends State<InterventionsPage> {
       child: ListView.separated(
         physics: const AlwaysScrollableScrollPhysics(),
         itemCount: interventions.length,
-        separatorBuilder: (_, __) =>
-            const SizedBox(height: 12),
+        separatorBuilder: (_, __) => const SizedBox(height: 12),
         itemBuilder: (context, index) {
           final intervention = interventions[index];
 
-return _InterventionCard(
-  intervention: intervention,
-  onOpen: () => _openInterventionDetails(intervention),
-);
+          return _InterventionCard(
+            intervention: intervention,
+            onOpen: () => _openInterventionDetails(intervention),
+          );
         },
       ),
-  );
+    );
   }
 }
 
@@ -436,16 +431,11 @@ class _InterventionCard extends StatelessWidget {
 
   static IconData _iconForType(InterventionType type) {
     return switch (type) {
-      InterventionType.maintenance =>
-        Icons.handyman_rounded,
-      InterventionType.modernization =>
-        Icons.upgrade_rounded,
-      InterventionType.breakdown =>
-        Icons.warning_amber_rounded,
-      InterventionType.inspection =>
-        Icons.fact_check_rounded,
-      InterventionType.other =>
-        Icons.home_repair_service_rounded,
+      InterventionType.maintenance => Icons.handyman_rounded,
+      InterventionType.modernization => Icons.upgrade_rounded,
+      InterventionType.breakdown => Icons.warning_amber_rounded,
+      InterventionType.inspection => Icons.fact_check_rounded,
+      InterventionType.other => Icons.home_repair_service_rounded,
     };
   }
 
@@ -601,14 +591,12 @@ class _InterventionDetailsSheet extends StatelessWidget {
                       if (intervention.photoUrls.isNotEmpty)
                         _DetailRow(
                           label: 'Fotografias',
-                          value:
-                              '${intervention.photoUrls.length}',
+                          value: '${intervention.photoUrls.length}',
                         ),
                       if (intervention.documentUrls.isNotEmpty)
                         _DetailRow(
                           label: 'Documentos',
-                          value:
-                              '${intervention.documentUrls.length}',
+                          value: '${intervention.documentUrls.length}',
                         ),
                       if (intervention.pdfUrl.trim().isNotEmpty)
                         const _DetailRow(
@@ -650,10 +638,9 @@ class _InterventionDetailsSheet extends StatelessWidget {
             children: [
               Text(
                 title,
-                style:
-                    Theme.of(context).textTheme.headlineSmall?.copyWith(
-                          fontWeight: FontWeight.w800,
-                        ),
+                style: Theme.of(context).textTheme.headlineSmall?.copyWith(
+                      fontWeight: FontWeight.w800,
+                    ),
               ),
               const SizedBox(height: 6),
               Wrap(
@@ -745,36 +732,24 @@ class _InterventionDetailsSheet extends StatelessWidget {
 
   static IconData _iconForType(InterventionType type) {
     return switch (type) {
-      InterventionType.maintenance =>
-        Icons.handyman_rounded,
-      InterventionType.modernization =>
-        Icons.upgrade_rounded,
-      InterventionType.breakdown =>
-        Icons.warning_amber_rounded,
-      InterventionType.inspection =>
-        Icons.fact_check_rounded,
-      InterventionType.other =>
-        Icons.home_repair_service_rounded,
+      InterventionType.maintenance => Icons.handyman_rounded,
+      InterventionType.modernization => Icons.upgrade_rounded,
+      InterventionType.breakdown => Icons.warning_amber_rounded,
+      InterventionType.inspection => Icons.fact_check_rounded,
+      InterventionType.other => Icons.home_repair_service_rounded,
     };
   }
 
   static IconData _iconForStatus(
-  InterventionStatus status,
-) {
-  return switch (status) {
-    InterventionStatus.planned =>
-      Icons.schedule_rounded,
-
-    InterventionStatus.inProgress =>
-      Icons.build_circle_rounded,
-
-    InterventionStatus.completed =>
-      Icons.check_circle_rounded,
-
-    InterventionStatus.cancelled =>
-      Icons.cancel_rounded,
-  };
-}
+    InterventionStatus status,
+  ) {
+    return switch (status) {
+      InterventionStatus.planned => Icons.schedule_rounded,
+      InterventionStatus.inProgress => Icons.build_circle_rounded,
+      InterventionStatus.completed => Icons.check_circle_rounded,
+      InterventionStatus.cancelled => Icons.cancel_rounded,
+    };
+  }
 }
 
 class _DetailsSection extends StatelessWidget {
@@ -798,9 +773,7 @@ class _DetailsSection extends StatelessWidget {
       width: double.infinity,
       padding: const EdgeInsets.all(18),
       decoration: BoxDecoration(
-        color: Theme.of(context)
-            .colorScheme
-            .surfaceContainerHighest,
+        color: Theme.of(context).colorScheme.surfaceContainerHighest,
         borderRadius: BorderRadius.circular(16),
         border: Border.all(
           color: Theme.of(context).colorScheme.outlineVariant,
@@ -858,9 +831,7 @@ class _DetailRow extends StatelessWidget {
             child: Text(
               label,
               style: TextStyle(
-                color: Theme.of(context)
-                    .colorScheme
-                    .onSurfaceVariant,
+                color: Theme.of(context).colorScheme.onSurfaceVariant,
                 fontWeight: FontWeight.w600,
               ),
             ),
@@ -977,9 +948,7 @@ class _StatusBadge extends StatelessWidget {
         vertical: 6,
       ),
       decoration: BoxDecoration(
-        color: Theme.of(context)
-            .colorScheme
-            .primaryContainer,
+        color: Theme.of(context).colorScheme.primaryContainer,
         borderRadius: BorderRadius.circular(999),
       ),
       child: Row(
@@ -1072,9 +1041,7 @@ class _EmptyState extends StatelessWidget {
             Icon(
               Icons.home_repair_service_rounded,
               size: 80,
-              color: Theme.of(context)
-                  .colorScheme
-                  .onSurfaceVariant,
+              color: Theme.of(context).colorScheme.onSurfaceVariant,
             ),
             const SizedBox(height: 16),
             Text(

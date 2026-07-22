@@ -23,14 +23,12 @@ class ReceptionReasonsSection extends StatelessWidget {
     bool selected,
   ) onReasonChanged;
 
-  final TextEditingController
-      expectedMaintenanceController;
+  final TextEditingController expectedMaintenanceController;
 
   final TextEditingController reportedFaultController;
   final TextEditingController expectedRepairController;
 
-  final TextEditingController
-      expectedModernizationController;
+  final TextEditingController expectedModernizationController;
 
   final Set<CompressorFaultType> selectedFaultTypes;
 
@@ -41,18 +39,15 @@ class ReceptionReasonsSection extends StatelessWidget {
 
   final bool enabled;
 
-  bool get _hasMaintenance =>
-      selectedReasons.contains(
+  bool get _hasMaintenance => selectedReasons.contains(
         ReceptionReason.maintenance,
       );
 
-  bool get _hasBreakdown =>
-      selectedReasons.contains(
+  bool get _hasBreakdown => selectedReasons.contains(
         ReceptionReason.breakdown,
       );
 
-  bool get _hasModernization =>
-      selectedReasons.contains(
+  bool get _hasModernization => selectedReasons.contains(
         ReceptionReason.modernization,
       );
 
@@ -65,30 +60,24 @@ class ReceptionReasonsSection extends StatelessWidget {
           child: Padding(
             padding: const EdgeInsets.all(16),
             child: Column(
-              crossAxisAlignment:
-                  CrossAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
                   'Motivo da Entrada',
-                  style: Theme.of(context)
-                      .textTheme
-                      .titleMedium
-                      ?.copyWith(
+                  style: Theme.of(context).textTheme.titleMedium?.copyWith(
                         fontWeight: FontWeight.bold,
                       ),
                 ),
                 const SizedBox(height: 6),
                 Text(
                   'Pode selecionar um, dois ou os três motivos.',
-                  style:
-                      Theme.of(context).textTheme.bodySmall,
+                  style: Theme.of(context).textTheme.bodySmall,
                 ),
                 const SizedBox(height: 12),
                 CheckboxListTile(
                   value: _hasMaintenance,
                   contentPadding: EdgeInsets.zero,
-                  controlAffinity:
-                      ListTileControlAffinity.leading,
+                  controlAffinity: ListTileControlAffinity.leading,
                   title: const Text('Manutenção'),
                   subtitle: const Text(
                     'Revisão ou manutenção preventiva.',
@@ -109,8 +98,7 @@ class ReceptionReasonsSection extends StatelessWidget {
                 CheckboxListTile(
                   value: _hasBreakdown,
                   contentPadding: EdgeInsets.zero,
-                  controlAffinity:
-                      ListTileControlAffinity.leading,
+                  controlAffinity: ListTileControlAffinity.leading,
                   title: const Text('Avaria'),
                   subtitle: const Text(
                     'Falha ou problema indicado pelo cliente.',
@@ -131,8 +119,7 @@ class ReceptionReasonsSection extends StatelessWidget {
                 CheckboxListTile(
                   value: _hasModernization,
                   contentPadding: EdgeInsets.zero,
-                  controlAffinity:
-                      ListTileControlAffinity.leading,
+                  controlAffinity: ListTileControlAffinity.leading,
                   title: const Text('Modernização'),
                   subtitle: const Text(
                     'Alteração ou melhoria do equipamento.',
@@ -154,8 +141,7 @@ class ReceptionReasonsSection extends StatelessWidget {
                   Text(
                     'Selecione pelo menos um motivo.',
                     style: TextStyle(
-                      color:
-                          Theme.of(context).colorScheme.error,
+                      color: Theme.of(context).colorScheme.error,
                       fontSize: 12,
                     ),
                   ),
@@ -167,29 +153,24 @@ class ReceptionReasonsSection extends StatelessWidget {
         if (_hasMaintenance) ...[
           const SizedBox(height: 16),
           _MaintenanceSection(
-            controller:
-                expectedMaintenanceController,
+            controller: expectedMaintenanceController,
             enabled: enabled,
           ),
         ],
         if (_hasBreakdown) ...[
           const SizedBox(height: 16),
           _BreakdownSection(
-            reportedFaultController:
-                reportedFaultController,
-            expectedRepairController:
-                expectedRepairController,
+            reportedFaultController: reportedFaultController,
+            expectedRepairController: expectedRepairController,
             selectedFaultTypes: selectedFaultTypes,
-            onFaultTypeChanged:
-                onFaultTypeChanged,
+            onFaultTypeChanged: onFaultTypeChanged,
             enabled: enabled,
           ),
         ],
         if (_hasModernization) ...[
           const SizedBox(height: 16),
           _ModernizationSection(
-            controller:
-                expectedModernizationController,
+            controller: expectedModernizationController,
             enabled: enabled,
           ),
         ],
@@ -214,8 +195,7 @@ class _MaintenanceSection extends StatelessWidget {
       child: Padding(
         padding: const EdgeInsets.all(16),
         child: Column(
-          crossAxisAlignment:
-              CrossAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             const _SectionTitle(
               icon: Icons.build_outlined,
@@ -227,8 +207,7 @@ class _MaintenanceSection extends StatelessWidget {
               enabled: enabled,
               minLines: 3,
               maxLines: 6,
-              textCapitalization:
-                  TextCapitalization.sentences,
+              textCapitalization: TextCapitalization.sentences,
               decoration: const InputDecoration(
                 labelText: 'Trabalho previsto',
                 hintText:
@@ -237,8 +216,7 @@ class _MaintenanceSection extends StatelessWidget {
                 border: OutlineInputBorder(),
               ),
               validator: (value) {
-                if (value == null ||
-                    value.trim().isEmpty) {
+                if (value == null || value.trim().isEmpty) {
                   return 'Indique o trabalho de manutenção previsto.';
                 }
 
@@ -280,8 +258,7 @@ class _BreakdownSection extends StatelessWidget {
       child: Padding(
         padding: const EdgeInsets.all(16),
         child: Column(
-          crossAxisAlignment:
-              CrossAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             const _SectionTitle(
               icon: Icons.warning_amber_outlined,
@@ -290,19 +267,16 @@ class _BreakdownSection extends StatelessWidget {
             const SizedBox(height: 6),
             Text(
               'Selecione todos os sintomas indicados.',
-              style:
-                  Theme.of(context).textTheme.bodySmall,
+              style: Theme.of(context).textTheme.bodySmall,
             ),
             const SizedBox(height: 12),
             ...CompressorFaultType.values.map(
               (faultType) {
                 return CheckboxListTile(
-                  value:
-                      selectedFaultTypes.contains(faultType),
+                  value: selectedFaultTypes.contains(faultType),
                   contentPadding: EdgeInsets.zero,
                   dense: true,
-                  controlAffinity:
-                      ListTileControlAffinity.leading,
+                  controlAffinity: ListTileControlAffinity.leading,
                   title: Text(
                     Reception.faultTypeLabel(
                       faultType,
@@ -324,8 +298,7 @@ class _BreakdownSection extends StatelessWidget {
               Text(
                 'Selecione pelo menos um tipo de avaria.',
                 style: TextStyle(
-                  color:
-                      Theme.of(context).colorScheme.error,
+                  color: Theme.of(context).colorScheme.error,
                   fontSize: 12,
                 ),
               ),
@@ -336,19 +309,15 @@ class _BreakdownSection extends StatelessWidget {
               enabled: enabled,
               minLines: 3,
               maxLines: 6,
-              textCapitalization:
-                  TextCapitalization.sentences,
+              textCapitalization: TextCapitalization.sentences,
               decoration: const InputDecoration(
-                labelText:
-                    'Avaria indicada pelo cliente',
-                hintText:
-                    'Descreva o problema ou os sintomas comunicados.',
+                labelText: 'Avaria indicada pelo cliente',
+                hintText: 'Descreva o problema ou os sintomas comunicados.',
                 alignLabelWithHint: true,
                 border: OutlineInputBorder(),
               ),
               validator: (value) {
-                if (value == null ||
-                    value.trim().isEmpty) {
+                if (value == null || value.trim().isEmpty) {
                   return 'Descreva a avaria indicada.';
                 }
 
@@ -361,12 +330,10 @@ class _BreakdownSection extends StatelessWidget {
               enabled: enabled,
               minLines: 3,
               maxLines: 6,
-              textCapitalization:
-                  TextCapitalization.sentences,
+              textCapitalization: TextCapitalization.sentences,
               decoration: const InputDecoration(
                 labelText: 'Trabalho previsto',
-                hintText:
-                    'Indique o trabalho inicialmente previsto.',
+                hintText: 'Indique o trabalho inicialmente previsto.',
                 alignLabelWithHint: true,
                 border: OutlineInputBorder(),
               ),
@@ -394,8 +361,7 @@ class _ModernizationSection extends StatelessWidget {
       child: Padding(
         padding: const EdgeInsets.all(16),
         child: Column(
-          crossAxisAlignment:
-              CrossAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             const _SectionTitle(
               icon: Icons.upgrade_outlined,
@@ -407,8 +373,7 @@ class _ModernizationSection extends StatelessWidget {
               enabled: enabled,
               minLines: 3,
               maxLines: 6,
-              textCapitalization:
-                  TextCapitalization.sentences,
+              textCapitalization: TextCapitalization.sentences,
               decoration: const InputDecoration(
                 labelText: 'Modernização prevista',
                 hintText:
@@ -417,8 +382,7 @@ class _ModernizationSection extends StatelessWidget {
                 border: OutlineInputBorder(),
               ),
               validator: (value) {
-                if (value == null ||
-                    value.trim().isEmpty) {
+                if (value == null || value.trim().isEmpty) {
                   return 'Indique a modernização prevista.';
                 }
 
@@ -449,10 +413,7 @@ class _SectionTitle extends StatelessWidget {
         const SizedBox(width: 10),
         Text(
           title,
-          style: Theme.of(context)
-              .textTheme
-              .titleMedium
-              ?.copyWith(
+          style: Theme.of(context).textTheme.titleMedium?.copyWith(
                 fontWeight: FontWeight.bold,
               ),
         ),

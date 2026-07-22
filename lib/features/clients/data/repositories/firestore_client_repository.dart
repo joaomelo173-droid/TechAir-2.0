@@ -22,9 +22,7 @@ class FirestoreClientRepository implements ClientRepository {
   }) async {
     final snapshot = await _clients(companyId).orderBy('name').get();
 
-    return snapshot.docs
-        .map(ClientFirestoreMapper.fromFirestore)
-        .toList();
+    return snapshot.docs.map(ClientFirestoreMapper.fromFirestore).toList();
   }
 
   @override
@@ -34,9 +32,8 @@ class FirestoreClientRepository implements ClientRepository {
   }) async {
     final collection = _clients(companyId);
 
-    final doc = client.id.isEmpty
-        ? collection.doc()
-        : collection.doc(client.id);
+    final doc =
+        client.id.isEmpty ? collection.doc() : collection.doc(client.id);
 
     final entity = client.copyWith(
       id: doc.id,

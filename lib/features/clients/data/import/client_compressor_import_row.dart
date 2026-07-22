@@ -48,10 +48,7 @@ class ClientCompressorImportRow {
   bool get isValid => clientName.trim().isNotEmpty;
 
   String get normalizedClientName {
-    return clientName
-        .trim()
-        .replaceAll(RegExp(r'\s+'), ' ')
-        .toLowerCase();
+    return clientName.trim().replaceAll(RegExp(r'\s+'), ' ').toLowerCase();
   }
 
   ClientCompressorImportRow copyWith({
@@ -84,18 +81,14 @@ class ClientCompressorImportRow {
       responsibleEmail: responsibleEmail ?? this.responsibleEmail,
       equipmentDetails: equipmentDetails ?? this.equipmentDetails,
       district: district ?? this.district,
-      lastMaintenanceDate:
-          lastMaintenanceDate ?? this.lastMaintenanceDate,
-      nextMaintenanceDate:
-          nextMaintenanceDate ?? this.nextMaintenanceDate,
-      maintenanceStatus:
-          maintenanceStatus ?? this.maintenanceStatus,
+      lastMaintenanceDate: lastMaintenanceDate ?? this.lastMaintenanceDate,
+      nextMaintenanceDate: nextMaintenanceDate ?? this.nextMaintenanceDate,
+      maintenanceStatus: maintenanceStatus ?? this.maintenanceStatus,
       lastModernizationDate:
           lastModernizationDate ?? this.lastModernizationDate,
       nextModernizationDate:
           nextModernizationDate ?? this.nextModernizationDate,
-      modernizationStatus:
-          modernizationStatus ?? this.modernizationStatus,
+      modernizationStatus: modernizationStatus ?? this.modernizationStatus,
       quoteSent: quoteSent ?? this.quoteSent,
       alert: alert ?? this.alert,
       lastAlertDate: lastAlertDate ?? this.lastAlertDate,

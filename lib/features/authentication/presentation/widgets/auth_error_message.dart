@@ -8,7 +8,9 @@ String authErrorMessage(Object error) {
   return switch (error.code) {
     'invalid-email' => 'O endereço de email não é válido.',
     'user-disabled' => 'Esta conta foi desativada.',
-    'user-not-found' || 'wrong-password' || 'invalid-credential' =>
+    'user-not-found' ||
+    'wrong-password' ||
+    'invalid-credential' =>
       'Email ou palavra-passe incorretos.',
     'too-many-requests' =>
       'Foram feitas demasiadas tentativas. Aguarda alguns minutos.',

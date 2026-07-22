@@ -14,55 +14,27 @@ class FirestoreReceptionMapper {
       clientId: (data['clientId'] ?? '').toString(),
       compressorId: (data['compressorId'] ?? '').toString(),
       clientName: (data['clientName'] ?? '').toString(),
-      compressorName:
-          (data['compressorName'] ?? '').toString(),
-
-      receivedAt:
-          _dateTimeFromFirestore(data['receivedAt']) ??
-              DateTime.now(),
-
+      compressorName: (data['compressorName'] ?? '').toString(),
+      receivedAt: _dateTimeFromFirestore(data['receivedAt']) ?? DateTime.now(),
       receivedBy: (data['receivedBy'] ?? '').toString(),
-
       reasons: _reasonsFromFirestore(
         data['reasons'],
       ),
-
-      expectedMaintenance:
-          (data['expectedMaintenance'] ?? '').toString(),
-
+      expectedMaintenance: (data['expectedMaintenance'] ?? '').toString(),
       faultTypes: _faultTypesFromFirestore(
         data['faultTypes'],
       ),
-
-      reportedFault:
-          (data['reportedFault'] ?? '').toString(),
-
-      expectedRepair:
-          (data['expectedRepair'] ?? '').toString(),
-
-      expectedModernization:
-          (data['expectedModernization'] ?? '').toString(),
-
-      observations:
-          (data['observations'] ?? '').toString(),
-
-      photoUrls:
-          _stringListFromFirestore(data['photoUrls']),
-
+      reportedFault: (data['reportedFault'] ?? '').toString(),
+      expectedRepair: (data['expectedRepair'] ?? '').toString(),
+      expectedModernization: (data['expectedModernization'] ?? '').toString(),
+      observations: (data['observations'] ?? '').toString(),
+      photoUrls: _stringListFromFirestore(data['photoUrls']),
       status: _statusFromFirestore(
         data['status'],
       ),
-
-      workshopJobId:
-          (data['workshopJobId'] ?? '').toString(),
-
-      createdAt:
-          _dateTimeFromFirestore(data['createdAt']) ??
-              DateTime.now(),
-
-      updatedAt:
-          _dateTimeFromFirestore(data['updatedAt']) ??
-              DateTime.now(),
+      workshopJobId: (data['workshopJobId'] ?? '').toString(),
+      createdAt: _dateTimeFromFirestore(data['createdAt']) ?? DateTime.now(),
+      updatedAt: _dateTimeFromFirestore(data['updatedAt']) ?? DateTime.now(),
     );
   }
 
@@ -75,41 +47,21 @@ class FirestoreReceptionMapper {
       'compressorId': reception.compressorId,
       'clientName': reception.clientName,
       'compressorName': reception.compressorName,
-
-      'receivedAt':
-          Timestamp.fromDate(reception.receivedAt),
-
+      'receivedAt': Timestamp.fromDate(reception.receivedAt),
       'receivedBy': reception.receivedBy,
-
-      'reasons': reception.reasons
-          .map((reason) => reason.name)
-          .toList(),
-
-      'expectedMaintenance':
-          reception.expectedMaintenance,
-
-      'faultTypes': reception.faultTypes
-          .map((faultType) => faultType.name)
-          .toList(),
-
+      'reasons': reception.reasons.map((reason) => reason.name).toList(),
+      'expectedMaintenance': reception.expectedMaintenance,
+      'faultTypes':
+          reception.faultTypes.map((faultType) => faultType.name).toList(),
       'reportedFault': reception.reportedFault,
       'expectedRepair': reception.expectedRepair,
-      'expectedModernization':
-          reception.expectedModernization,
-
+      'expectedModernization': reception.expectedModernization,
       'observations': reception.observations,
-
       'photoUrls': reception.photoUrls,
-
       'status': reception.status.name,
-
       'workshopJobId': reception.workshopJobId,
-
-      'createdAt':
-          Timestamp.fromDate(reception.createdAt),
-
-      'updatedAt':
-          Timestamp.fromDate(reception.updatedAt),
+      'createdAt': Timestamp.fromDate(reception.createdAt),
+      'updatedAt': Timestamp.fromDate(reception.updatedAt),
     };
   }
 
@@ -147,11 +99,10 @@ class FirestoreReceptionMapper {
     for (final item in value) {
       final name = item.toString();
 
-      final reason = ReceptionReason.values.cast<
-          ReceptionReason?>().firstWhere(
-        (value) => value?.name == name,
-        orElse: () => null,
-      );
+      final reason = ReceptionReason.values.cast<ReceptionReason?>().firstWhere(
+            (value) => value?.name == name,
+            orElse: () => null,
+          );
 
       if (reason != null && !reasons.contains(reason)) {
         reasons.add(reason);
@@ -161,8 +112,7 @@ class FirestoreReceptionMapper {
     return reasons;
   }
 
-  static List<CompressorFaultType>
-      _faultTypesFromFirestore(
+  static List<CompressorFaultType> _faultTypesFromFirestore(
     dynamic value,
   ) {
     if (value is! Iterable) {
@@ -174,14 +124,13 @@ class FirestoreReceptionMapper {
     for (final item in value) {
       final name = item.toString();
 
-      final faultType = CompressorFaultType.values.cast<
-          CompressorFaultType?>().firstWhere(
-        (value) => value?.name == name,
-        orElse: () => null,
-      );
+      final faultType =
+          CompressorFaultType.values.cast<CompressorFaultType?>().firstWhere(
+                (value) => value?.name == name,
+                orElse: () => null,
+              );
 
-      if (faultType != null &&
-          !faultTypes.contains(faultType)) {
+      if (faultType != null && !faultTypes.contains(faultType)) {
         faultTypes.add(faultType);
       }
     }

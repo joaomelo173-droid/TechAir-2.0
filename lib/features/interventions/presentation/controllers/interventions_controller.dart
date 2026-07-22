@@ -26,8 +26,7 @@ class InterventionsController extends ChangeNotifier {
   bool get saving => _saving;
   String? get error => _error;
 
-  List<Intervention> get interventions =>
-      List.unmodifiable(_interventions);
+  List<Intervention> get interventions => List.unmodifiable(_interventions);
 
   bool get isGlobal {
     return clientId == null ||
@@ -68,15 +67,13 @@ class InterventionsController extends ChangeNotifier {
   Future<bool> startIntervention(
     Intervention intervention,
   ) async {
-    if (intervention.status ==
-        InterventionStatus.completed) {
+    if (intervention.status == InterventionStatus.completed) {
       _error = 'Esta intervenção já está concluída.';
       notifyListeners();
       return false;
     }
 
-    if (intervention.status ==
-        InterventionStatus.cancelled) {
+    if (intervention.status == InterventionStatus.cancelled) {
       _error = 'Uma intervenção cancelada não pode ser iniciada.';
       notifyListeners();
       return false;
@@ -98,10 +95,8 @@ class InterventionsController extends ChangeNotifier {
     required int? operatingHours,
     required DateTime? nextInterventionDate,
   }) async {
-    if (intervention.status ==
-        InterventionStatus.completed) {
-      _error =
-          'A intervenção já está concluída e não pode ser alterada.';
+    if (intervention.status == InterventionStatus.completed) {
+      _error = 'A intervenção já está concluída e não pode ser alterada.';
       notifyListeners();
       return false;
     }
@@ -138,17 +133,14 @@ class InterventionsController extends ChangeNotifier {
       return false;
     }
 
-    if (intervention.status ==
-        InterventionStatus.completed) {
+    if (intervention.status == InterventionStatus.completed) {
       _error = 'Esta intervenção já está concluída.';
       notifyListeners();
       return false;
     }
 
-    if (intervention.status ==
-        InterventionStatus.cancelled) {
-      _error =
-          'Uma intervenção cancelada não pode ser finalizada.';
+    if (intervention.status == InterventionStatus.cancelled) {
+      _error = 'Uma intervenção cancelada não pode ser finalizada.';
       notifyListeners();
       return false;
     }
@@ -177,10 +169,8 @@ class InterventionsController extends ChangeNotifier {
   Future<bool> cancelIntervention(
     Intervention intervention,
   ) async {
-    if (intervention.status ==
-        InterventionStatus.completed) {
-      _error =
-          'Uma intervenção concluída não pode ser cancelada.';
+    if (intervention.status == InterventionStatus.completed) {
+      _error = 'Uma intervenção concluída não pode ser cancelada.';
       notifyListeners();
       return false;
     }
@@ -199,11 +189,9 @@ class InterventionsController extends ChangeNotifier {
     _error = null;
 
     final targetClientId = _targetClientId(intervention);
-    final targetCompressorId =
-        _targetCompressorId(intervention);
+    final targetCompressorId = _targetCompressorId(intervention);
 
-    if (targetClientId.isEmpty ||
-        targetCompressorId.isEmpty) {
+    if (targetClientId.isEmpty || targetCompressorId.isEmpty) {
       _error = 'Cliente ou compressor não definido.';
       notifyListeners();
       return false;
@@ -237,11 +225,9 @@ class InterventionsController extends ChangeNotifier {
     _error = null;
 
     final targetClientId = _targetClientId(intervention);
-    final targetCompressorId =
-        _targetCompressorId(intervention);
+    final targetCompressorId = _targetCompressorId(intervention);
 
-    if (targetClientId.isEmpty ||
-        targetCompressorId.isEmpty) {
+    if (targetClientId.isEmpty || targetCompressorId.isEmpty) {
       _error = 'Cliente ou compressor não definido.';
       notifyListeners();
       return false;
@@ -297,10 +283,8 @@ class InterventionsController extends ChangeNotifier {
         'Indique os trabalhos de modernização realizados.',
       InterventionType.breakdown =>
         'Indique a avaria e os trabalhos realizados.',
-      InterventionType.inspection =>
-        'Indique o resultado da inspeção.',
-      InterventionType.other =>
-        'Indique os trabalhos realizados.',
+      InterventionType.inspection => 'Indique o resultado da inspeção.',
+      InterventionType.other => 'Indique os trabalhos realizados.',
     };
   }
 

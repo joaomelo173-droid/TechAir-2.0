@@ -12,9 +12,8 @@ class InMemoryClientRepository implements ClientRepository {
   }) async {
     await Future<void>.delayed(const Duration(milliseconds: 180));
 
-    final list = _clients
-        .where((client) => client.companyId == companyId)
-        .toList();
+    final list =
+        _clients.where((client) => client.companyId == companyId).toList();
 
     list.sort(
       (a, b) => a.name.toLowerCase().compareTo(
@@ -53,9 +52,7 @@ class InMemoryClientRepository implements ClientRepository {
     await Future<void>.delayed(const Duration(milliseconds: 120));
 
     _clients.removeWhere(
-      (client) =>
-          client.companyId == companyId &&
-          client.id == clientId,
+      (client) => client.companyId == companyId && client.id == clientId,
     );
   }
 

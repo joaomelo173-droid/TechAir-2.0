@@ -36,16 +36,13 @@ class ClientExcelImporter {
     );
 
     final existingByName = <String, Client>{
-      for (final client in existingClients)
-        _normalize(client.name): client,
+      for (final client in existingClients) _normalize(client.name): client,
     };
 
     final rowsByClient = <String, List<ClientExcelImportRow>>{};
 
     for (final row in result.rows) {
-      rowsByClient
-          .putIfAbsent(row.normalizedClientName, () => [])
-          .add(row);
+      rowsByClient.putIfAbsent(row.normalizedClientName, () => []).add(row);
     }
 
     var createdClients = 0;
@@ -143,10 +140,8 @@ class ClientExcelImporter {
         'lastMaintenanceDate': _timestamp(row.lastMaintenanceDate),
         'nextMaintenanceDate': _timestamp(row.nextMaintenanceDate),
         'maintenanceStatus': row.maintenanceStatus,
-        'lastModernizationDate':
-            _timestamp(row.lastModernizationDate),
-        'nextModernizationDate':
-            _timestamp(row.nextModernizationDate),
+        'lastModernizationDate': _timestamp(row.lastModernizationDate),
+        'nextModernizationDate': _timestamp(row.nextModernizationDate),
         'modernizationStatus': row.modernizationStatus,
         'quoteSent': row.quoteSent,
         'alert': row.alert,
@@ -181,9 +176,6 @@ class ClientExcelImporter {
   }
 
   String _normalize(String value) {
-    return value
-        .trim()
-        .replaceAll(RegExp(r'\s+'), ' ')
-        .toLowerCase();
+    return value.trim().replaceAll(RegExp(r'\s+'), ' ').toLowerCase();
   }
 }
